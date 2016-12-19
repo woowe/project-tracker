@@ -1,0 +1,15 @@
+<div class="login-container">
+  <div class="login-card-container">
+    <md-card>
+      <img src="../assets/dealersocket-logo.png" alt="DealerSocket">
+      <md-input placeholder="Username"></md-input>
+      <md-input placeholder="Password"></md-input>
+      <button md-raised-button color="primary" (click)="openDefault()">LOGIN</button>
+    </md-card>
+  </div>
+  <div class="product-container">
+    <div class="logo-container" *ngFor="let logo of logos">
+      <img [src]="logo.path" [alt]="logo.alt">
+    </div>
+  </div>
+</div>
