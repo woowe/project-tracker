@@ -1,15 +1,21 @@
 <div class="login-container">
   <div class="login-card-container">
-    <md-card>
+    <md-card class="login-card">
       <img src="../assets/dealersocket-logo.png" alt="DealerSocket">
-      <md-input placeholder="Username"></md-input>
-      <md-input placeholder="Password"></md-input>
-      <button md-raised-button color="primary" (click)="openDefault()">LOGIN</button>
+      <md-input #email placeholder="Email"></md-input>
+      <md-input #password placeholder="Password" type="password"></md-input>
+      <button md-raised-button color="primary" (click)="login(email.value, password.value)">LOGIN</button>
     </md-card>
   </div>
   <div class="product-container">
     <div class="logo-container" *ngFor="let logo of logos">
       <img [src]="logo.path" [alt]="logo.alt">
     </div>
+  </div>
+  <div class="authentication-overlay" [@overlayBackground]="background_state" [ngStyle]="{display: loggingIn ? 'flex' : 'none'}">
+    <md-card [@authBackground]="auth_back_state" [@flyIn]="flyin_state">
+      <md-progress-circle [@progressScale]="progress_state" mode="indeterminate" color="primary"></md-progress-circle>
+      <span>{{auth_text}}</span>
+    </md-card>
   </div>
 </div>

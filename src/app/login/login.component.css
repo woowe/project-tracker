@@ -1,6 +1,6 @@
 .login-container {
-  background: url('../assets/login-background.png');
-  height: 100%;
+  background: url('../assets/login-background.png') no-repeat center center;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -16,11 +16,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px 0;
+  flex-wrap: wrap;
+  padding: 15px 0;
 }
 
 .product-container .logo-container {
-  margin: 0 30px;
+  margin: 15px 30px;
   opacity: 0.4;
   transition: opacity 0.3s ease;
 }
@@ -29,25 +30,53 @@
   opacity: 1;
 }
 
-md-card {
+md-card.login-card {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.25);
-  padding: 75px;
-  width: 25%;
+  padding: 75px 3.9vw;
+  width: 480px;
+  max-width: 100%;
 }
 
-md-card img {
+md-card.login-card img {
   margin-bottom: 50px;
 }
-md-card md-input {
+md-card.login-card md-input {
   margin-top: 25px;
   width: 100%;
 }
-md-card button {
+md-card.login-card button {
   margin-top: 50px;
   font-family: 'Raleway', sans-serif;
   letter-spacing: 2.5px;
+}
+
+.authentication-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.authentication-overlay md-card {
+  display: flex;
+  align-items: center;
+  background-color: #42A5F5;
+  color: #fff;
+}
+
+.authentication-overlay md-card md-progress-circle {
+  width: 27px;
+  height: 27px;
+  margin-right: 15px;
 }
