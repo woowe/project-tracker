@@ -10,6 +10,16 @@ body, html {
   height: 100%;
 }
 
+/* Change the white to any color ;) */
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus,
+.login-container input:-webkit-autofill:active {
+    background-color: transparent;
+    transition: background-color 99999s ease-in-out 0s;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+}
+
 .login-container .md-input-placeholder {
   margin-left: 10px;
   text-transform: uppercase;

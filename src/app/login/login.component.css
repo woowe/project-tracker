@@ -13,7 +13,7 @@
 }
 
 .product-container {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -30,6 +30,12 @@
   opacity: 1;
 }
 
+@media (min-width: 840px) {
+  .product-container {
+    display: flex;
+  }
+}
+
 md-card.login-card {
   display: flex;
   justify-content: center;
@@ -39,6 +45,13 @@ md-card.login-card {
   padding: 75px 3.9vw;
   width: 480px;
   max-width: 100%;
+}
+
+md-card.login-card form {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 md-card.login-card img {
