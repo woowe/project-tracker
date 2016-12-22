@@ -15,9 +15,11 @@ body, html {
 .login-container input:-webkit-autofill:hover,
 .login-container input:-webkit-autofill:focus,
 .login-container input:-webkit-autofill:active {
-    background-color: transparent;
-    transition: background-color 99999s ease-in-out 0s;
+    background-color: transparent !important;
+    transition: background-color 99999999999s ease-in-out 0s;
     -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important;
+    background-clip: content-box;
+     /*-webkit-box-shadow: 0 0 0px 1000px white inset;*/
 }
 
 .login-container .md-input-placeholder {

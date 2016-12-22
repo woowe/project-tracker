@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { ProductLogosService } from './services/ProductLogos/product-logos.service';
+import { AuthGuardService } from './services/AuthGuards/auth-guard.service';
+import { UserInfoService } from './services/UserInfo/user-info.service';
 
 import 'hammerjs';
 import { ProductSelectionComponent } from './product-selection/product-selection.component';
@@ -30,7 +32,8 @@ const myFirebaseAuthConfig = {
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'product-selection', component: ProductSelectionComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
@@ -48,7 +51,11 @@ const appRoutes: Routes = [
     AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig)
   ],
   entryComponents: [],
-  providers: [ ProductLogosService ],
-  bootstrap: [AppComponent]
+  providers: [
+    ProductLogosService,
+    UserInfoService,
+    AuthGuardService
+  ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, trigger, state, style, transition, animate } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
+import { UserInfoService } from '../services/UserInfo/user-info.service';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
 var enter_ms = 750;
@@ -45,7 +46,7 @@ export class LoginComponent implements OnInit {
   auth_text: string = "Authenticating";
   loggedIn = null;
 
-  constructor(private productLogos: ProductLogosService, public af: AngularFire, private router: Router) {
+  constructor(private productLogos: ProductLogosService, public af: AngularFire, private router: Router, private userInfo: UserInfoService) {
   }
 
   reset_state() {
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.logos = this.productLogos.getLogos();
-    this.af.auth.subscribe(auth => {
+    this.userInfo.auth.subscribe(auth => {
       if(auth != null) {
         this.loggingIn = true;
         this.flyin_state = "in";
@@ -73,10 +74,12 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           this.flyin_state = "end";
           this.background_state = "out";
-          setTimeout(() => this.reset_state(), enter_ms);
+          setTimeout(() => {
+            this.reset_state()
+            this.router.navigate(['/product-selection']);
+          }, enter_ms);
         }, enter_ms + 1250);
       }
-      console.log(auth);
     });
   }
 
@@ -85,8 +88,8 @@ export class LoginComponent implements OnInit {
     this.flyin_state = "in";
     this.background_state = "in";
     this.loggingIn = true;
-    this.af.auth.login({email: email, password: password},{ provider: AuthProviders.Password, method: AuthMethods.Password})
-    .then(success => {
+    this.userInfo.login(email, password,
+    success => {
       console.log("Firebase success: " + JSON.stringify(success));
       this.auth_text = "Success!";
       this.progress_state = "out";
@@ -99,8 +102,8 @@ export class LoginComponent implements OnInit {
           this.reset_state();
         }, enter_ms);
       }, look_ms);
-    })
-    .catch(error => {
+    },
+    error => {
       console.log("Firebase error: " + JSON.stringify(error));
       this.auth_text = "Failed to log in!";
       this.progress_state = "out";
