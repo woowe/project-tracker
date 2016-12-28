@@ -1,5 +1,45 @@
 <div class="product-selection-container">
-  <md-card>
-    <h1>Product selection works</h1>
-  </md-card>
+  <div class="product-selection">
+    <div class="products-container">
+      <div class="product-container" *ngFor="let pl of product_logos">
+        <div class="circle-container">
+          <svg width="250" height="250" viewBox="0 0 100 100">
+            <defs>
+              <linearGradient id="grad1" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#1E88E5;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#42A5F5;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <path [attr.d]="path | async" stroke="#81C784" fill="transparent" stroke-width="2"/>
+            <circle r="48" cx="50" cy="50" fill="url(#grad1)"/>
+          </svg>
+          <span [class]="pl.alt | to_path:'icon-':'-icon'"></span>
+        </div>
+        <img [src]="pl.path" [alt]="pl.alt">
+      </div>
+    </div>
+    <div class="moto-container">
+      <img [src]="productLogos.getLogo('We Are Automotive').path" [alt]="productLogos.getLogo('We Are Automotive').alt">
+    </div>
+  </div>
+  <div class="pm-contact">
+    <div>
+      <span>
+        <i class="material-icons">person</i>{{(userInfo.project_manager | async)?.name}}
+      </span>
+    </div>
+    <div>
+      <span>
+        <i class="material-icons">email</i>
+        <a href="mailto: {{(userInfo.project_manager | async)?.email}}">{{(userInfo.project_manager | async)?.email}}</a>
+      </span>
+    </div>
+    <div>
+      <span>
+        <i class="material-icons">phone</i>
+        <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format}}">{{((userInfo.project_manager | async)?.phone | phone_format)}}</a>
+      </span>
+    </div>
+    <img [src]="productLogos.getLogo('DealerSocket').path" [alt]="productLogos.getLogo('DealerSocket').alt">
+  </div>
 </div>

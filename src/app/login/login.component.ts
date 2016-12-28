@@ -58,29 +58,45 @@ export class LoginComponent implements OnInit {
     this.auth_text = "Authenticating";
   }
 
+  navigate_to_next_page(group) {
+    switch(group) {
+      case "pm":
+        this.router.navigate(['/product-selection']);
+        break;
+      case "customer":
+        this.router.navigate(['/product-selection']);
+        break;
+      case "admin":
+        this.router.navigate(['/product-selection']);
+        break;
+      default:
+        break;
+    }
+  }
+
   ngOnInit() {
-    this.logos = this.productLogos.getLogos();
-    this.userInfo.auth.subscribe(auth => {
-      if(auth != null) {
-        this.loggingIn = true;
-        this.flyin_state = "in";
-        this.background_state = "in";
-        this.loggedIn = true;
-        setTimeout(() => {
-          this.auth_text = "Success!";
-          this.progress_state = "out";
-          this.auth_back_state = "success";
-        }, enter_ms + 500);
-        setTimeout(() => {
-          this.flyin_state = "end";
-          this.background_state = "out";
-          setTimeout(() => {
-            this.reset_state()
-            this.router.navigate(['/product-selection']);
-          }, enter_ms);
-        }, enter_ms + 1250);
-      }
-    });
+    this.logos = this.productLogos.getProductLogos();
+    // this.userInfo.auth.subscribe(auth => {
+      // if(auth != null) {
+      //   this.loggingIn = true;
+      //   this.flyin_state = "in";
+      //   this.background_state = "in";
+      //   this.loggedIn = true;
+      //   setTimeout(() => {
+      //     this.auth_text = "Success!";
+      //     this.progress_state = "out";
+      //     this.auth_back_state = "success";
+      //   }, enter_ms + 500);
+      //   setTimeout(() => {
+      //     this.flyin_state = "end";
+      //     this.background_state = "out";
+      //     setTimeout(() => {
+      //       this.reset_state()
+      //       this.router.navigate(['/product-selection']);
+      //     }, enter_ms);
+      //   }, enter_ms + 1250);
+      // }
+    // });
   }
 
   login(email: string, password: string) {
@@ -90,7 +106,7 @@ export class LoginComponent implements OnInit {
     this.loggingIn = true;
     this.userInfo.login(email, password,
     success => {
-      console.log("Firebase success: " + JSON.stringify(success));
+      console.log("Firebase success");
       this.auth_text = "Success!";
       this.progress_state = "out";
       this.auth_back_state = "success";
@@ -100,11 +116,15 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           this.loggedIn = true;
           this.reset_state();
+          this.userInfo.info.subscribe(info => {
+            console.log(info);
+            this.navigate_to_next_page(info.group);
+          });
         }, enter_ms);
       }, look_ms);
     },
     error => {
-      console.log("Firebase error: " + JSON.stringify(error));
+      console.log("Firebase error");
       this.auth_text = "Failed to log in!";
       this.progress_state = "out";
       this.auth_back_state = "fail";

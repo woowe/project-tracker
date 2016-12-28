@@ -1,7 +1,7 @@
 <div class="login-container">
   <div class="login-card-container">
     <md-card class="login-card">
-      <img src="../assets/dealersocket-logo.png" alt="DealerSocket">
+      <img [src]="productLogos.getLogo('DealerSocket').path" [alt]="productLogos.getLogo('DealerSocket').alt">
       <div style="color: #EF5350"
       [ngStyle]="{height: loggedIn === false ? '25px' : '0px', transition: 'height 200ms ease', overflow: 'hidden', display: 'flex', alignItems: 'center'}"
       ><i class="material-icons">error</i>&nbsp;Your email or login is incorrect</div>
@@ -10,6 +10,7 @@
         <md-input [dividerColor]="loggedIn === false ? 'warn' : 'accent'" #password placeholder="Password" type="password"></md-input>
         <button type="submit" md-raised-button color="primary" (click)="login(email.value, password.value)">LOGIN</button>
       </form>
+      <img id="we-are-automotive-logo" [src]="productLogos.getLogo('We Are Automotive').path" [alt]="productLogos.getLogo('We Are Automotive').alt">
     </md-card>
   </div>
   <div class="product-container">

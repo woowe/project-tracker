@@ -25,6 +25,11 @@ var dummy_data = [
     alt: "Revenue Radar",
     url: "",
     path: "../assets/revenue-radar-logo.png"
+  },
+  {
+    alt: "We Are Automotive",
+    url: "",
+    path: "../assets/we-are-automotive-logo.png"
   }
 ];
 
@@ -37,9 +42,14 @@ export class ProductLogosService {
     return this.logos;
   }
 
+  getProductLogos() {
+    return this.logos.filter(logo => logo.alt !== "We Are Automotive");
+  }
+
   getLogo(logo: string) {
     for(var i = 0; i < this.logos.length; ++i) {
       if(this.logos[i].alt === logo) {
+        // console.log(this.logos[i]);
         return this.logos[i];
       }
     }

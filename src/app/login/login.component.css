@@ -45,6 +45,7 @@ md-card.login-card {
   padding: 75px 3.9vw;
   width: 480px;
   max-width: 100%;
+  padding-bottom: 25px;
 }
 
 md-card.login-card form {
@@ -92,4 +93,9 @@ md-card.login-card button {
   width: 27px;
   height: 27px;
   margin-right: 15px;
+}
+
+#we-are-automotive-logo {
+  margin-top: 50px;
+  margin-bottom: 0px;
 }

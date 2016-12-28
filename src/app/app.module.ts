@@ -17,6 +17,10 @@ import { UserInfoService } from './services/UserInfo/user-info.service';
 import 'hammerjs';
 import { ProductSelectionComponent } from './product-selection/product-selection.component';
 
+import { PhoneFormatPipe } from './pipes/phone_format.pipe';
+import { ToPathPipe } from './pipes/to_path.pipe';
+import { SafeUrlPipe } from './pipes/safe_url.pipe';
+
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
   authDomain: "project-tracker-c98a9.firebaseapp.com",
@@ -40,7 +44,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     LoginComponent,
-    ProductSelectionComponent
+    ProductSelectionComponent,
+    PhoneFormatPipe,
+    ToPathPipe,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,
