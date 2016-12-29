@@ -7,6 +7,11 @@
   background: url('../assets/product-selection-background.png') no-repeat center center;
 }
 
+.product-selection-container h1, h2, h3, h4, h5, p, a, span {
+  font-family: 'Raleway', sans-serif;
+  color: #fff;
+}
+
 .product-selection-container .product-selection {
   flex-grow: 1;
   display: flex;
@@ -22,7 +27,7 @@
   align-items: center;
   width: 100%;
   flex-grow: 8;
-  max-width: 1440px;
+  max-width: 1640px;
   flex-wrap: wrap;
 }
 
@@ -31,6 +36,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  margin-top: 66px;
+}
+
+.product-selection-container .product-selection .products-container .product-container .activation-date {
+  position: absolute;
+  top: 0;
+  transform: translate(-50%, -100%);
+  text-align: center;
+  left: 50%;
+  white-space: nowrap;
+}
+.product-selection-container .product-selection .products-container .product-container .activation-date h4 {
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
+
+.product-selection-container .product-selection .products-container .product-container .activation-date h4:first-of-type {
+  margin-bottom: 10px;
 }
 
 .product-selection-container .product-selection .products-container .product-container .circle-container {
@@ -42,11 +66,11 @@
   transition: all 0.2s ease;
 }
 
-.product-selection-container .product-selection .products-container .product-container .circle-container:hover span {
+.product-selection-container .product-selection .products-container .product-container:hover .circle-container span {
   color: #2196F3;
 }
 
-.product-selection-container .product-selection .products-container .product-container .circle-container:hover svg circle {
+.product-selection-container .product-selection .products-container .product-container:hover .circle-container svg circle {
   fill: #dfdfdf;
 }
 
@@ -54,13 +78,17 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -46%);
   color: #fff;
-  font-size: 3.2rem;
+  font-size: 4rem;
 }
 
-.product-selection-container .product-selection .products-container .product-container img {
-  margin-top: 25px;
+.product-selection-container .product-selection .products-container .product-container .logo-container {
+  min-height: 33px;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .product-selection-container .moto-container {
@@ -88,6 +116,7 @@
   display: flex;
   align-items: center;
   margin: 25px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .product-selection-container .pm-contact span i {

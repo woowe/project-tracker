@@ -20,6 +20,7 @@ import { ProductSelectionComponent } from './product-selection/product-selection
 import { PhoneFormatPipe } from './pipes/phone_format.pipe';
 import { ToPathPipe } from './pipes/to_path.pipe';
 import { SafeUrlPipe } from './pipes/safe_url.pipe';
+import { IsProductPipe } from './pipes/is_product.pipe';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -47,7 +48,8 @@ const appRoutes: Routes = [
     ProductSelectionComponent,
     PhoneFormatPipe,
     ToPathPipe,
-    SafeUrlPipe
+    SafeUrlPipe,
+    IsProductPipe
   ],
   imports: [
     BrowserModule,
