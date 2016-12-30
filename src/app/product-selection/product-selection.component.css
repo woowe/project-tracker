@@ -78,9 +78,13 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -46%);
+  transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 4rem;
+  /*font-size: 4rem;*/
+}
+
+.product-selection-container .product-selection .products-container .product-container span i {
+  font-size: 3rem;
 }
 
 .product-selection-container .product-selection .products-container .product-container .logo-container {

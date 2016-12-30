@@ -61,6 +61,7 @@ export class UserInfoService {
                 if( cnt >= pl - 1 ) {
                   console.log(milestones);
                   this._milestones.next(milestones);
+                  this._milestones.complete();
                   milestones = [];
                   cnt = 0;
                 }
@@ -69,16 +70,11 @@ export class UserInfoService {
             }
             console.log(products);
             this._products.next(products);
+            this._products.complete();
             products = [];
-            // this._products.complete();
-            // this._products.subscribe(products => {});
           });
         }
-
       });
-      // this._info.subscribe((info) => {
-      //   console.log(info);
-      // });
       success(_success);
     })
     .catch(_error => {
@@ -111,8 +107,41 @@ export class UserInfoService {
     return this._milestones;
   }
 
+  getDayDiff(start_ms: number, end_ms: number, days_diff: number) {
+    var days_diff_ms = Math.abs(days_diff) * 86400000;
+    return (days_diff >= 0) ? start_ms + days_diff_ms : end_ms - days_diff;
+  }
+
+  calculateMilestoneCompletion(p_info: any, m_info: any): Observable<number> {
+    if(typeof p_info !== "object" || typeof m_info !== "object") {
+      return null;
+    }
+    return Observable.create(observer => {
+      // gets milliseconds then divides by 86400000 to convert milliseconds into days.
+      var date_now = Date.parse(p_info.started) + (14 * 86400000);
+      var activation = Date.parse(p_info.activation);
+      var started = Date.parse(p_info.started);
+      var total_time = (activation - started) / 86400000 | 0;
+      var elapsed_time = (date_now - started) / 86400000 | 0;
+
+      var total_points = 0;
+      var acc_points = 0;
+      for(let milestone of m_info.milestones) {
+        // console.log('DAYS DIFF:', new Date(this.getDayDiff(started, activation, milestone.days_differential)) );
+        // console.log('DAYS NOW:', date_now );
+        if(this.getDayDiff(started, activation, milestone.days_differential) <= date_now && milestone.status === "Complete") {
+          acc_points += milestone.points;
+        }
+        total_points += milestone.points;
+      }
+      observer.next( acc_points / total_points * 100 );
+      observer.complete();
+    });
+  }
+
   ngOnDestroy() {
     this.af.auth.unsubscribe();
     this._products.complete();
+    this._milestones.complete();
   }
 }

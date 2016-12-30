@@ -14,12 +14,13 @@
                 <stop offset="100%" style="stop-color:#42A5F5;stop-opacity:1" />
               </linearGradient>
             </defs>
-            <path [attr.d]="(product.milestone | async) ? describeArc(50, 50, 48.5, 0, (product.milestone | async)?.percent_complete / 100 * 360) : describeArc(50, 50, 48.5, 0, 0)" 
+            <path [attr.d]="(product.milestone | async) ? describeArc(50, 50, 48.5, 0, (product.percent_complete | async) / 100 * 360) : describeArc(50, 50, 48.5, 0, 0)"
             stroke="#81C784" fill="transparent" stroke-width="2"/>
             <circle r="48" cx="50" cy="50" fill="url(#grad1)"/>
           </svg>
-          <span [class]="product.logo_info.alt | to_path:'icon-':'-icon'"></span>
+          <span><i class="material-icons">{{getIcon(product.logo_info.alt)}}</i></span>
         </div>
+        <!-- <span class="completion-percent">{{userInfo.calculateMilestoneCompletion((product.product | async)?.$key, (product.milestone | async)?.$key) | async)}}</span> -->
         <div class="logo-container">
           <img [src]="product.logo_info.path" [alt]="product.logo_info.alt">
         </div>
