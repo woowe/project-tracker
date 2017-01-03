@@ -14,15 +14,28 @@
                 <stop offset="100%" style="stop-color:#42A5F5;stop-opacity:1" />
               </linearGradient>
             </defs>
-            <path [attr.d]="(product.milestone | async) ? describeArc(50, 50, 48.5, 0, (product.percent_complete | async) / 100 * 360) : describeArc(50, 50, 48.5, 0, 0)"
-            stroke="#81C784" fill="transparent" stroke-width="2"/>
-            <circle r="48" cx="50" cy="50" fill="url(#grad1)"/>
+            <!-- (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 :  -->
+            <path [attr.d]="describeArc(50, 50, 45.5, 0, (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="arc_load"
+            stroke="#81C784" fill="transparent" stroke-width="4"/>
+            <circle r="45" cx="50" cy="50" fill="url(#grad1)"/>
           </svg>
           <span><i class="material-icons">{{getIcon(product.logo_info.alt)}}</i></span>
+          <div *ngIf="product.completion_info | async" class="completion-container">
+            <div>{{ (product.completion_info | async)?.percent_complete.toFixed(0) }}% Complete</div>
+          </div>
         </div>
-        <!-- <span class="completion-percent">{{userInfo.calculateMilestoneCompletion((product.product | async)?.$key, (product.milestone | async)?.$key) | async)}}</span> -->
         <div class="logo-container">
           <img [src]="product.logo_info.path" [alt]="product.logo_info.alt">
+        </div>
+        <div *ngIf="product.completion_info | async" class="attention-container">
+          <div>
+            {{(product.completion_info | async)?.status}}
+          </div>
+          <ul>
+          <li class="" *ngFor="let am of (product.completion_info | async)?.need_attenion_milestones">
+            -&nbsp;&nbsp;{{am}}
+          </li>
+          </ul>
         </div>
       </div>
     </div>

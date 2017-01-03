@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
 
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
@@ -11,10 +11,18 @@ import { Observable } from "rxjs/Rx";
   selector: 'app-product-selection',
   templateUrl: './product-selection.component.html',
   styleUrls: ['./product-selection.component.css'],
+  animations: [
+    trigger('arcLoad', [
+      state('start', style({ strokeDashoffset: -286, strokeDasharray: 286 })),
+      state('end', style({ strokeDashoffset: 0, strokeDasharray: 286 })),
+      transition("* => *", animate(`750ms ease`))
+    ])
+  ]
 })
 export class ProductSelectionComponent implements OnInit {
   product_info: any[];
   path: Observable<string>;
+  arc_load = "start";
 
   constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) {
     // this.path = Observable.create(observer => {
@@ -75,44 +83,23 @@ export class ProductSelectionComponent implements OnInit {
     this.product_info = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v } });
     var p, m;
     p = this.userInfo.products;
-    p.subscribe(products => {
-      var idx = 0;
-      for(var product of products) {
-        this.product_info[idx].product = product;
-        // product.subscribe(p => {
-        // });
-        ++idx;
-      }
-    })
     m = this.userInfo.milestones;
-    m.subscribe(milestones => {
-      var idx = 0;
-      for(var milestone of milestones) {
-        this.product_info[idx].milestone = milestone;
-        // this.product_info[idx].product.subscribe(p_info => {
-        //   this.product_info[idx].percent_complete = this.userInfo.calculateMilestoneCompletion(p_info.$key, )
-        // });
-        // milestone.subscribe(m => {
-          // this.product_info[idx].path = describeArc(50, 50, 48.5, 0, (m.percent_complete / 100) * 360);
-        // });
-        ++idx;
-      }
-    });
     p.combineLatest(m).subscribe(([products, milestones]) => {
-      console.log("COMBINED: ", products, milestones);
-      for(var i = 0; i < products.length; ++i) {
-        if(products[i] && milestones[i]) {
-          products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
-            console.log('COMBINDED SINGLE', product, milestone);
-            this.product_info[i].percent_complete = this.userInfo.calculateMilestoneCompletion(product, milestone);
-          });
+      if(products && milestones) {
+        console.log("COMBINED: ", products, milestones);
+        for(var i = 0; i < products.length; ++i) {
+          this.product_info[i].milestone = milestones[i];
+          this.product_info[i].product = products[i];
+          if(products[i] && milestones[i]) {
+            var idx = i;
+            products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
+              console.log('COMBINDED SINGLE', product, milestone, this.product_info);
+              this.product_info[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
+              this.arc_load = "end";
+            });
+          }
         }
       }
     });
-    // for(var info of this.product_info) {
-    //   info.product.combineLatest(info.milestone).map(([p_info, m_info]) => {
-    //     console.log("RESULT FROM FORK JOIN: ", p_info, m_info);
-    //   });
-    // }
   }
 }
