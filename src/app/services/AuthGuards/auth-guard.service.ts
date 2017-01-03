@@ -10,15 +10,15 @@ export class AuthGuardService implements CanActivate {
 
   canActivate() {
     if(!this.user_info.loggedIn) {
-      this.router.navigate(['/login']);
-      // this.user_info.login("test_cust@dealersocket.com", "projecttracker",
-      // success => {
-      //   console.log("Firebase success");
-      // },
-      // error => {
-      //   console.log("Firebase error");
-      // });
-      return false;
+      // this.router.navigate(['/login']);
+      this.user_info.login("test_cust@dealersocket.com", "projecttracker",
+      success => {
+        console.log("Firebase success");
+      },
+      error => {
+        console.log("Firebase error");
+      });
+      // return false;
     }
     return true;
   }

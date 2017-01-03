@@ -1,0 +1,30 @@
+<md-tab-group [selectedIndex]="1">
+  <md-tab *ngFor="let product of products;" >
+    <template md-tab-label>
+      <img [src]="product.logo_info.path" [alt]="product.logo_info.alt">
+    </template>
+    <div class="milestone-content">
+      <h2>{{ (product.logo_info.alt) }} Project</h2>
+      <h2>Projected Activation Date: {{ (product.product | async)?.activation }}</h2>
+      <div class="pm-contact">
+        <div>
+          <span>
+            <i class="material-icons">person</i>{{(userInfo.project_manager | async)?.name}}
+          </span>
+        </div>
+        <div>
+          <span>
+            <i class="material-icons">email</i>
+            <a href="mailto: {{(userInfo.project_manager | async)?.email}}">{{(userInfo.project_manager | async)?.email}}</a>
+          </span>
+        </div>
+        <div>
+          <span>
+            <i class="material-icons">phone</i>
+            <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format}}">{{((userInfo.project_manager | async)?.phone | phone_format)}}</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </md-tab>
+</md-tab-group>

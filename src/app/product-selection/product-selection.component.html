@@ -2,6 +2,7 @@
   <div class="product-selection">
     <div class="products-container">
       <div class="product-container" *ngFor="let product of product_info; let i = index">
+      <a routerLink="/milestone-tracker">
         <div class="activation-date">
           <h4 *ngIf="(product.product | async)">Product Activation Date:</h4>
           <h4 *ngIf="(product.product | async)">{{ (product.product | async)?.activation }}</h4>
@@ -15,8 +16,8 @@
               </linearGradient>
             </defs>
             <!-- (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 :  -->
-            <path [attr.d]="describeArc(50, 50, 45.5, 0, (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="arc_load"
-            stroke="#81C784" fill="transparent" stroke-width="4"/>
+            <path [attr.d]="describeArc(50, 50, 45.5, 0, (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="product.arc_state"
+            fill="transparent" stroke-width="4"/>
             <circle r="45" cx="50" cy="50" fill="url(#grad1)"/>
           </svg>
           <span><i class="material-icons">{{getIcon(product.logo_info.alt)}}</i></span>
@@ -28,15 +29,16 @@
           <img [src]="product.logo_info.path" [alt]="product.logo_info.alt">
         </div>
         <div *ngIf="product.completion_info | async" class="attention-container">
-          <div>
+          <div class="product-status" [@productState]="product.product_state">
             {{(product.completion_info | async)?.status}}
           </div>
           <ul>
-          <li class="" *ngFor="let am of (product.completion_info | async)?.need_attenion_milestones">
-            -&nbsp;&nbsp;{{am}}
-          </li>
+            <li class="" *ngFor="let am of (product.completion_info | async)?.need_attenion_milestones">
+              -&nbsp;&nbsp;{{am}}
+            </li>
           </ul>
         </div>
+      </a>
       </div>
     </div>
     <div class="moto-container">

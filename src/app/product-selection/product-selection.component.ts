@@ -13,8 +13,15 @@ import { Observable } from "rxjs/Rx";
   styleUrls: ['./product-selection.component.css'],
   animations: [
     trigger('arcLoad', [
-      state('start', style({ strokeDashoffset: -286, strokeDasharray: 286 })),
-      state('end', style({ strokeDashoffset: 0, strokeDasharray: 286 })),
+      state('start', style({ strokeDashoffset: -286, strokeDasharray: 286, stroke: 'white' })),
+      state('end-bad', style({ strokeDashoffset: 0, strokeDasharray: 286, stroke: '#EF5350' })),
+      state('end-good', style({ strokeDashoffset: 0, strokeDasharray: 286, stroke: '#66BB6A' })),
+      transition("* => *", animate(`750ms ease`))
+    ]),
+    trigger('productState', [
+      state('start', style({ color: 'white' })),
+      state('end-bad', style({ color: '#EF5350' })),
+      state('end-good', style({ color: '#66BB6A' })),
       transition("* => *", animate(`750ms ease`))
     ])
   ]
@@ -22,7 +29,6 @@ import { Observable } from "rxjs/Rx";
 export class ProductSelectionComponent implements OnInit {
   product_info: any[];
   path: Observable<string>;
-  arc_load = "start";
 
   constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) {
     // this.path = Observable.create(observer => {
@@ -80,7 +86,7 @@ export class ProductSelectionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.product_info = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v } });
+    this.product_info = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v, arc_state: "start", product_state: "start" } });
     var p, m;
     p = this.userInfo.products;
     m = this.userInfo.milestones;
@@ -95,7 +101,15 @@ export class ProductSelectionComponent implements OnInit {
             products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
               console.log('COMBINDED SINGLE', product, milestone, this.product_info);
               this.product_info[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
-              this.arc_load = "end";
+              this.product_info[idx].completion_info.subscribe(info => {
+                if(info.status !== "Complete") {
+                  this.product_info[idx].arc_state = "end-bad";
+                  this.product_info[idx].product_state = "end-bad";
+                } else {
+                  this.product_info[idx].arc_state = "end-good";
+                  this.product_info[idx].product_state = "end-good";
+                }
+              })
             });
           }
         }

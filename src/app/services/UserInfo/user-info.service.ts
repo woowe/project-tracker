@@ -135,7 +135,7 @@ export class UserInfoService {
       var percent_complete = acc_points / total_points;
       observer.next( {
         percent_complete: percent_complete * 100,
-        status: need_attenion_milestones.length > 0 ? "Behind Schedule" : "On Schedule",
+        status: need_attenion_milestones.length > 0 ? "Needs Attention" : "On Schedule",
         need_attenion_milestones: need_attenion_milestones
       });
       observer.complete();

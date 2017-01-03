@@ -21,6 +21,7 @@ import { PhoneFormatPipe } from './pipes/phone_format.pipe';
 import { ToPathPipe } from './pipes/to_path.pipe';
 import { SafeUrlPipe } from './pipes/safe_url.pipe';
 import { IsProductPipe } from './pipes/is_product.pipe';
+import { MilestoneTrackerComponent } from './milestone-tracker/milestone-tracker.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -38,7 +39,8 @@ const myFirebaseAuthConfig = {
 const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'product-selection', component: ProductSelectionComponent, canActivate: [AuthGuardService] }
+  { path: 'product-selection', component: ProductSelectionComponent, canActivate: [AuthGuardService] },
+  { path: 'milestone-tracker', component: MilestoneTrackerComponent, canActivate: [AuthGuardService] }
 ];
 
 @NgModule({
@@ -49,7 +51,8 @@ const appRoutes: Routes = [
     PhoneFormatPipe,
     ToPathPipe,
     SafeUrlPipe,
-    IsProductPipe
+    IsProductPipe,
+    MilestoneTrackerComponent
   ],
   imports: [
     BrowserModule,

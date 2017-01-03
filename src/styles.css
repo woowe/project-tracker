@@ -41,3 +41,40 @@ body, html {
 .authentication-overlay md-card md-progress-circle path {
   stroke: #fff;
 }
+
+.md-tab-header {
+  border: none;
+  margin: 25px;
+}
+
+.md-tab-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.md-tab-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.md-tab-label:hover {
+  opacity: 1 !important;
+}
+
+.md-tab-label.md-tab-active {
+  opacity: 1 !important;
+}
+
+.md-tab-label:focus {
+     background-color: transparent !important;
+}
+.md-tab-body-wrapper {
+  flex-grow: 1;
+}
+
+md-tab-body {
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+}

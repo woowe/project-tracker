@@ -1,0 +1,47 @@
+
+md-tab-group {
+  background-color: black;
+  /*padding: 25px;*/
+  min-height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.milestone-content {
+  max-width: 1640px;
+  margin: 0 auto;
+}
+
+.milestone-content h1, h2, h3, h4, h5, p, a, li {
+  /*margin: 0;
+  padding: 0;*/
+}
+
+.pm-contact {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: calc(0.85rem + 0.3vw);
+}
+
+.pm-contact span {
+  display: flex;
+  align-items: center;
+  margin: 0 25px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.pm-contact span i {
+  margin-right: 10px;
+}
+
+.pm-contact span a,
+.pm-contact span a:hover,
+.pm-contact span a:visited {
+  color: #fff;
+}
