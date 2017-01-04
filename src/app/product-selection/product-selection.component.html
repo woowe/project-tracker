@@ -18,7 +18,7 @@
             <!-- (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 :  -->
             <path [attr.d]="describeArc(50, 50, 45.5, 0, (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="product.arc_state"
             fill="transparent" stroke-width="4"/>
-            <circle r="45" cx="50" cy="50" fill="url(#grad1)"/>
+            <circle r="45" cx="50" cy="50" fill="url(#grad1) #42A5F5"/>
           </svg>
           <span><i class="material-icons">{{getIcon(product.logo_info.alt)}}</i></span>
           <div *ngIf="product.completion_info | async" class="completion-container">
@@ -60,7 +60,7 @@
     <div>
       <span>
         <i class="material-icons">phone</i>
-        <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format}}">{{((userInfo.project_manager | async)?.phone | phone_format)}}</a>
+        <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format:false}}">{{((userInfo.project_manager | async)?.phone | phone_format:true)}}</a>
       </span>
     </div>
     <img [src]="productLogos.getLogo('DealerSocket').path" [alt]="productLogos.getLogo('DealerSocket').alt">

@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100%;
   width: 100%;
-  background: url('../assets/product-selection-background.png') no-repeat center center;
+  background: url('../assets/product-selection-background.png') #222B32 no-repeat center center;
 }
 
 .product-selection-container h1, h2, h3, h4, h5, p, a, span {
@@ -37,7 +37,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  margin-top: 66px;
+  margin-top: 81px;
   padding-bottom: 100px;
 }
 
@@ -98,11 +98,12 @@
 
 .product-selection-container .moto-container {
   width: 100%;
-  height: 100%;
-  flex-grow: 1;
+  /*height: 100%;
+  flex-grow: 1;*/
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding: 20px 0px;
 }
 .product-selection-container .completion-container {
   position: absolute;
