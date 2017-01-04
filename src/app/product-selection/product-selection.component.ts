@@ -102,7 +102,8 @@ export class ProductSelectionComponent implements OnInit {
               console.log('COMBINDED SINGLE', product, milestone, this.product_info);
               this.product_info[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
               this.product_info[idx].completion_info.subscribe(info => {
-                if(info.status !== "Complete") {
+                console.log('INFO', info);
+                if(info.status !== "On Schedule") {
                   this.product_info[idx].arc_state = "end-bad";
                   this.product_info[idx].product_state = "end-bad";
                 } else {
