@@ -1,0 +1,22 @@
+<div class="pm-header">
+  <div class="container">
+    <div class="left">
+      <h1>{{ (this.info | async)?.name }}</h1>
+    </div>
+  </div>
+</div>
+<div class="pm-dashboard">
+  <div class="container">
+    <div class="accounts">
+
+    </div>
+    <div class="logos">
+      <div class="moto">
+        <img [src]="productLogos.getLogo('We Are Automotive').path" [alt]="productLogos.getLogo('We Are Automotive').alt">
+      </div>
+      <div class="products">
+        <img *ngFor="let pl of productLogos.getProductLogos();" [src]="pl.path" [alt]="pl.alt">
+      </div>
+    </div>
+  </div>
+</div>

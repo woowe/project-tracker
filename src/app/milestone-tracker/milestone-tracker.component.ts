@@ -22,7 +22,7 @@ import { FirebaseObjectObservable } from 'angularfire2';
 })
 export class MilestoneTrackerComponent implements OnInit, AfterViewInit {
   products;
-  constructor(private productLogos: ProductLogosService,private router: Router, private userInfo: UserInfoService) { }
+  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) { }
 
   getDate(product, milestone) {
     if(product && milestone) {
@@ -56,7 +56,6 @@ export class MilestoneTrackerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
     var p, m;
     p = this.userInfo.products;
     m = this.userInfo.milestones;

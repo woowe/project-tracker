@@ -28,21 +28,8 @@ import { Observable } from "rxjs/Rx";
 })
 export class ProductSelectionComponent implements OnInit {
   product_info: any[];
-  path: Observable<string>;
 
-  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) {
-    // this.path = Observable.create(observer => {
-    //   observer.i = 0;
-    //   setInterval(() => {
-    //     if(observer.i >= 360) {
-    //       observer.next(describeArc(50, 50, 48.5, 0, 359.9));
-    //       observer.complete();
-    //     }
-    //     observer.next(describeArc(50, 50, 48.5, 0, observer.i % 360));
-    //     observer.i += 1;
-    //   }, 16.67);
-    // });
-  }
+  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) {}
 
   polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
@@ -96,6 +83,7 @@ export class ProductSelectionComponent implements OnInit {
         for(var i = 0; i < products.length; ++i) {
           this.product_info[i].milestone = milestones[i];
           this.product_info[i].product = products[i];
+
           if(products[i] && milestones[i]) {
             var idx = i;
             products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
@@ -113,6 +101,7 @@ export class ProductSelectionComponent implements OnInit {
               })
             });
           }
+
         }
       }
     });

@@ -58,16 +58,16 @@ export class LoginComponent implements OnInit {
     this.auth_text = "Authenticating";
   }
 
-  navigate_to_next_page(group) {
-    switch(group) {
-      case "pm":
+  navigate_to_next_page(group: string) {
+    switch(group.toLowerCase()) {
+      case "admin":
         this.router.navigate(['/product-selection']);
         break;
       case "customer":
         this.router.navigate(['/product-selection']);
         break;
-      case "admin":
-        this.router.navigate(['/product-selection']);
+      case "project manager":
+        this.router.navigate(['/pm-dashboard']);
         break;
       default:
         break;

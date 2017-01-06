@@ -22,6 +22,7 @@ import { ToPathPipe } from './pipes/to_path.pipe';
 import { SafeUrlPipe } from './pipes/safe_url.pipe';
 import { IsProductPipe } from './pipes/is_product.pipe';
 import { MilestoneTrackerComponent } from './milestone-tracker/milestone-tracker.component';
+import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -40,7 +41,8 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'product-selection', component: ProductSelectionComponent, canActivate: [AuthGuardService] },
-  { path: 'milestone-tracker', component: MilestoneTrackerComponent, canActivate: [AuthGuardService] }
+  { path: 'milestone-tracker', component: MilestoneTrackerComponent, canActivate: [AuthGuardService] },
+  { path: 'pm-dashboard', component: ProjectManagerDashboardComponent, canActivate: [AuthGuardService] },
 ];
 
 @NgModule({
@@ -52,7 +54,8 @@ const appRoutes: Routes = [
     ToPathPipe,
     SafeUrlPipe,
     IsProductPipe,
-    MilestoneTrackerComponent
+    MilestoneTrackerComponent,
+    ProjectManagerDashboardComponent
   ],
   imports: [
     BrowserModule,

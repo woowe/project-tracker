@@ -8,6 +8,7 @@ import { Observable, Subject, BehaviorSubject } from "rxjs/Rx";
 @Injectable()
 export class UserInfoService {
   _info: FirebaseObjectObservable<any>;
+  _login_observable: BehaviorSubject<boolean>;
   // _info_data: any;
   _project_manager: FirebaseObjectObservable<any>;
   _dealership: FirebaseObjectObservable<any>;
@@ -18,12 +19,12 @@ export class UserInfoService {
   constructor(private af: AngularFire, private router: Router) {
     this._products = new BehaviorSubject(null);
     this._milestones = new BehaviorSubject(null);
+    this._login_observable = new BehaviorSubject(null);
   }
 
   login(email: string, password: string, success: any, error: any) {
     this.af.auth.login({email: email, password: password},{ provider: AuthProviders.Password, method: AuthMethods.Password})
     .then(_success => {
-      this.loggedIn = true;
       this._info = this.af.database.object(`/Users/${_success.uid}`);
       this._info.subscribe(info => {
 
@@ -68,15 +69,22 @@ export class UserInfoService {
         }
       });
       success(_success);
+      this.loggedIn = true;
+      this._login_observable.next(true);
     })
     .catch(_error => {
-      this.loggedIn = false;
       error(_error);
+      this.loggedIn = false;
+      this._login_observable.next(false);
     });
   }
 
   get auth(): AngularFireAuth {
     return this.af.auth;
+  }
+
+  get login_observable(): BehaviorSubject<boolean> {
+    return this._login_observable;
   }
 
   get logged_in() {
@@ -146,5 +154,6 @@ export class UserInfoService {
     this.af.auth.unsubscribe();
     this._products.complete();
     this._milestones.complete();
+    this._login_observable.complete();
   }
 }

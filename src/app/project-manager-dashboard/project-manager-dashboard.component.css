@@ -1,0 +1,30 @@
+.pm-header {
+  background-color: #2196F3;
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  padding: 50px 0px;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 25px;
+}
+
+.pm-header h1 {
+  margin: 0;
+  padding: 0;
+}
+
+.pm-dashboard .logos .moto {
+  display: flex;
+  justify-content: center;
+  padding: 25px 0;
+}
+
+.pm-dashboard .logos .products {
+  padding: 25px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
