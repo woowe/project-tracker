@@ -1,0 +1,37 @@
+<div class="dialog-container">
+  <form>
+    <h3><span data-idx="1"></span> Dealership Information</h3>
+    <md-grid-list cols="6" rowHeight="75px" gutterSize="10px">
+      <md-grid-tile colspan="6" rowspan="1">
+        <md-input dividerColor="accent" #name placeholder="Name"></md-input>
+      </md-grid-tile>
+      <md-grid-tile colspan="6" rowspan="1">
+        <md-input dividerColor="accent" #address placeholder="Address"></md-input>
+      </md-grid-tile>
+      <md-grid-tile colspan="2" rowspan="1">
+        <md-input dividerColor="accent" #city placeholder="City"></md-input>
+      </md-grid-tile>
+      <md-grid-tile colspan="2" rowspan="1">
+        <md-input dividerColor="accent" #state placeholder="State"></md-input>
+      </md-grid-tile>
+      <md-grid-tile colspan="2" rowspan="1">
+        <md-input dividerColor="accent" #zip placeholder="Zip"></md-input>
+      </md-grid-tile>
+    </md-grid-list>
+    <h3><span data-idx="2"></span> Products</h3>
+    <md-chip-list selectable="true">
+      <md-chip *ngFor="let pl of productLogos.getProductLogos(); let i = index;"
+      color="primary"
+      [tabindex]="i + 6"
+      (click)="selected_products.indexOf(pl.alt) >= 0 ? deselectProduct(pl.alt) : selectProduct(pl.alt)"
+      [selected]="selected_products.indexOf(pl.alt) >= 0">
+        {{ pl.alt }}
+      </md-chip>
+    </md-chip-list>
+    <div [@productState]="product_state">
+      {{last_selected_product}}
+    </div>
+    <h3><span data-idx="3"></span> People</h3>
+    <button type="submit" md-raised-button color="primary">ADD</button>
+  </form>
+</div>

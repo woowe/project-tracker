@@ -1,14 +1,30 @@
 <div class="pm-header">
   <div class="container">
     <div class="left">
-      <h1>{{ (this.info | async)?.name }}</h1>
+      <h1>{{ (info | async)?.name }}</h1>
     </div>
   </div>
 </div>
 <div class="pm-dashboard">
   <div class="container">
     <div class="accounts">
-
+      <div class="controls">
+        <span>Accounts:</span>
+        <button md-raised-button (click)="openDialog()" color="primary">Add Dealership</button>
+      </div>
+      <div class="grid">
+        <md-card *ngFor="let dealership of (dealerships | async)" class="dealership-item has-overlay">
+          <h3>{{(dealership | async)?.name}}</h3>
+          <div class="info">
+            <i class="material-icons">phone</i>
+            <a href="tel: {{(dealership | async)?.phone | phone_format:false}}">{{((dealership | async)?.phone | phone_format:true)}}</a>
+          </div>
+          <div class="info">
+            <i class="material-icons">email</i>
+            <a href="mailto: {{(dealership | async)?.email}}">{{(dealership | async)?.email}}</a>
+          </div>
+        </md-card>
+      </div>
     </div>
     <div class="logos">
       <div class="moto">

@@ -1,0 +1,47 @@
+.dialog-container {
+  width: 700px;
+  max-width: 100%;
+}
+
+.dialog-container h3 {
+  font-weight: normal;
+}
+
+.dialog-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-container form h3,
+.dialog-container form md-grid-list,
+.dialog-container form md-grid-list md-input {
+  width: 100%;
+}
+
+.dialog-container form h3 {
+  display: flex;
+  align-items: center;
+}
+
+.dialog-container form h3 span {
+  border-radius: 50%;
+  background: #2196F3;
+  /*color: #fff;*/
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin-right: 15px;
+}
+.dialog-container form h3 span::before {
+  content: attr(data-idx);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+}

@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterialModule } from '@angular/material';
+import { MaterialModule, MdDialogModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -22,7 +22,7 @@ import { ToPathPipe } from './pipes/to_path.pipe';
 import { SafeUrlPipe } from './pipes/safe_url.pipe';
 import { IsProductPipe } from './pipes/is_product.pipe';
 import { MilestoneTrackerComponent } from './milestone-tracker/milestone-tracker.component';
-import { ProjectManagerDashboardComponent } from './project-manager-dashboard/project-manager-dashboard.component';
+import { ProjectManagerDashboardComponent, AddDealershipDialog } from './project-manager-dashboard/project-manager-dashboard.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -55,7 +55,8 @@ const appRoutes: Routes = [
     SafeUrlPipe,
     IsProductPipe,
     MilestoneTrackerComponent,
-    ProjectManagerDashboardComponent
+    ProjectManagerDashboardComponent,
+    AddDealershipDialog
   ],
   imports: [
     BrowserModule,
@@ -63,9 +64,12 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot(),
+    MdDialogModule,
     AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig)
   ],
-  entryComponents: [],
+  entryComponents: [
+    AddDealershipDialog
+  ],
   providers: [
     ProductLogosService,
     UserInfoService,

@@ -9,17 +9,21 @@ import { Observable, Subject, BehaviorSubject } from "rxjs/Rx";
 export class UserInfoService {
   _info: FirebaseObjectObservable<any>;
   _login_observable: BehaviorSubject<boolean>;
-  // _info_data: any;
+
   _project_manager: FirebaseObjectObservable<any>;
   _dealership: FirebaseObjectObservable<any>;
-  _products: BehaviorSubject<any>;
   _milestones: BehaviorSubject<any>;
+
+  _dealerships: BehaviorSubject<any>;
+  _products: BehaviorSubject<any>;
+  _users: BehaviorSubject<any>;
 
   loggedIn: boolean;
   constructor(private af: AngularFire, private router: Router) {
     this._products = new BehaviorSubject(null);
     this._milestones = new BehaviorSubject(null);
     this._login_observable = new BehaviorSubject(null);
+    this._dealerships = new BehaviorSubject(null);
   }
 
   login(email: string, password: string, success: any, error: any) {
@@ -29,10 +33,8 @@ export class UserInfoService {
       this._info.subscribe(info => {
 
         //customer logic
-        if(info.project_manager) {
+        if(info.group === "customer") {
           this._project_manager = this.af.database.object(`/Users/${info.project_manager}`);
-        }
-        if(info.dealership) {
           this._dealership = this.af.database.object(`/Dealerships/${info.dealership}`);
           this._dealership.subscribe(dealership_info => {
             console.log('Found Dealership: ', dealership_info);
@@ -66,6 +68,16 @@ export class UserInfoService {
             // this._products.complete();
             products = [];
           });
+        }
+
+        // project manager logic
+        if(info.group === "project manager") {
+          var dealerships = [];
+          for(let idx in info.dealerships) {
+            dealerships.push(this.af.database.object(`/Dealerships/${info.dealerships[idx]}`));
+          }
+          this._dealerships.next(dealerships);
+          dealerships = [];
         }
       });
       success(_success);
@@ -108,6 +120,10 @@ export class UserInfoService {
     console.log('getting milestones');
     // this._milestones.complete();
     return this._milestones;
+  }
+
+  get dealerships(): BehaviorSubject<FirebaseObjectObservable<any>[]> {
+    return this._dealerships;
   }
 
   getDayDiff(start_ms: number, end_ms: number, days_diff: number) {
