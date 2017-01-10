@@ -126,6 +126,13 @@ export class UserInfoService {
     return this._dealerships;
   }
 
+  getAllProductTemplates() {
+    return this.af.database.object('/Product Templates/');
+  }
+  getAllMilestoneTemplates() {
+    return this.af.database.object('/Milestone Templates/');
+  }
+
   getDayDiff(start_ms: number, end_ms: number, days_diff: number) {
     var days_diff_ms = Math.abs(days_diff) * 86400000;
     return (days_diff >= 0) ? start_ms + days_diff_ms : end_ms - days_diff;

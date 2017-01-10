@@ -26,6 +26,7 @@ export class ProjectManagerDashboardComponent implements OnInit {
       if(loggedIn) {
         this.info = this.userInfo.info;
         this.dealerships = this.userInfo.dealerships;
+        this.openDialog();
       }
     });
   }
@@ -68,11 +69,33 @@ export class ProjectManagerDashboardComponent implements OnInit {
 })
 export class AddDealershipDialog {
   products: any[] = [];
+  milestone_templates: any[] = [];
   scroll_state: string = "scrolled-down";
   selected_tab: number = 0;
   product_more_info: any = null;
-  constructor(private productLogos: ProductLogosService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
+  constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
     this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false }; });
+    this.userInfo.getAllProductTemplates().subscribe(templates => {
+      for(let template of templates){
+        var p = this.products.findIndex(v => { return v.name === template.name });
+        if(p >= 0) {
+          this.products[p].p_template = template;
+          this.products[p].selected_type = template.types[template.default_type];
+          this.products[p].selected_type.idx = template.default_type;
+        }
+      }
+      console.log('Product templates: ', this.products);
+    });
+    this.userInfo.getAllMilestoneTemplates().subscribe(templates => {
+      this.milestone_templates = templates;
+      for(let p of this.products) {
+        if(p.selected_type) {
+          p.selected_milestone = templates[p.selected_type.default_milestone_template];
+          p.selected_milestone.idx = p.selected_type.default_milestone_template;
+        }
+      }
+      console.log('Milestone templates: ', this.milestone_templates);
+    });
   }
   toggleProductSelect(idx: number) {
     if(this.products[idx]) {

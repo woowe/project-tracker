@@ -23,6 +23,7 @@ import { SafeUrlPipe } from './pipes/safe_url.pipe';
 import { IsProductPipe } from './pipes/is_product.pipe';
 import { MilestoneTrackerComponent } from './milestone-tracker/milestone-tracker.component';
 import { ProjectManagerDashboardComponent, AddDealershipDialog } from './project-manager-dashboard/project-manager-dashboard.component';
+import { MilestoneEditorComponent } from './milestone-editor/milestone-editor.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -56,7 +57,8 @@ const appRoutes: Routes = [
     IsProductPipe,
     MilestoneTrackerComponent,
     ProjectManagerDashboardComponent,
-    AddDealershipDialog
+    AddDealershipDialog,
+    MilestoneEditorComponent
   ],
   imports: [
     BrowserModule,

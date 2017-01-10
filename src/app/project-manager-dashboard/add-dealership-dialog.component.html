@@ -20,18 +20,24 @@
             <md-input dividerColor="accent" #zip placeholder="Zip"></md-input>
           </md-grid-tile>
         </md-grid-list>
-        <h3><span data-idx="2"></span> Products</h3>
+        <h3><span data-idx="2"></span> Add Products</h3>
         <div class="product-inline-info-container">
           <div *ngFor="let sp of products; let i = index" class="product-inline-info">
             <h4 (click)="toggleProductSelect(i)" [class.selected]="sp.selected">{{ sp.name }}</h4>
             <md-select (click)="selectProduct(i)" placeholder="Type">
+              <md-option *ngFor="let type of sp.p_template?.types; let j = index" [value]="j">
+                {{ type.name }}
+              </md-option>
             </md-select>
             <md-select (click)="selectProduct(i)" placeholder="Milestones">
+              <md-option *ngFor="let milestone of milestone_templates; let k = index" [value]="k">
+                {{ milestone.name }}
+              </md-option>
             </md-select>
             <button (click)="selectProduct(i) + gotoTab(1, i)" md-button color="primary">More&nbsp;<i class="material-icons">keyboard_arrow_right</i></button>
           </div>
         </div>
-        <h3><span data-idx="3"></span> People</h3>
+        <h3><span data-idx="3"></span> Add People</h3>
         <button type="submit" md-raised-button color="primary">ADD</button>
       </form>
     </md-tab>
@@ -41,10 +47,16 @@
         <span>{{ (product_more_info)?.name }}</span>
       </md-toolbar>
       <div class="controls">
-        <md-select (click)="selectProduct(i)" placeholder="Type">
+        <!-- <md-select (click)="selectProduct(i)" placeholder="Type">
+          <md-option *ngFor="let type of product_more_info?.p_template?.types; let j = index" [value]="j">
+            {{ type.name }}
+          </md-option>
         </md-select>
         <md-select (click)="selectProduct(i)" placeholder="Milestones">
-        </md-select>
+          <md-option *ngFor="let milestone of milestone_templates; let k = index" [value]="k">
+            {{ milestone.name }}
+          </md-option>
+        </md-select> -->
       </div>
       <div class="milestone-editor">
         <h4>Milestones:</h4>
