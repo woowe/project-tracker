@@ -1,4 +1,4 @@
-import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, keyframes, animate } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
 import { UserInfoService } from '../services/UserInfo/user-info.service';
@@ -48,31 +48,57 @@ export class ProjectManagerDashboardComponent implements OnInit {
   styleUrls: ['./add-dealership-dialog.component.css'],
   animations: [
     trigger('productState', [
-      state('scrolled-up', style({ height: "0" })),
-      state('scrolled-down', style({ height: "*" })),
-      transition("scrolled-up => scrolled-down", animate(`750ms ease`)),
-      transition("scrolled-down => scrolled-up", animate(`750ms ease`)),
+      state('in', style({transform: 'translateX(0)'})),
+      transition('void => *', [
+        animate(300, keyframes([
+          style({opacity: 0, transform: 'translateX(-100%)', offset: 0}),
+          style({opacity: 1, transform: 'translateX(15px)',  offset: 0.3}),
+          style({opacity: 1, transform: 'translateX(0)',     offset: 1.0})
+        ]))
+      ]),
+      transition('* => void', [
+        animate(300, keyframes([
+          style({opacity: 1, transform: 'translateX(0)',     offset: 0}),
+          style({opacity: 1, transform: 'translateX(-15px)', offset: 0.7}),
+          style({opacity: 0, transform: 'translateX(100%)',  offset: 1.0})
+        ]))
+      ])
     ])
   ]
 })
 export class AddDealershipDialog {
-  selected_products: string[] = [];
-  last_selected_product: string = null;
-  scroll_state: string = "scrolled-up";
-  constructor(private productLogos: ProductLogosService, public dialogRef: MdDialogRef<AddDealershipDialog>) {}
-  selectProduct(alt: string) {
-    console.log('Selected Product: ', alt);
-    this.last_selected_product = alt;
-    this.selected_products.push(alt);
-    this.scroll_state = "scrolled-down";
+  products: any[] = [];
+  scroll_state: string = "scrolled-down";
+  selected_tab: number = 0;
+  product_more_info: any = null;
+  constructor(private productLogos: ProductLogosService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
+    this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false }; });
   }
-  deselectProduct(alt: string) {
-    console.log('Deselected Product: ', alt);
-    var idx = this.selected_products.indexOf(alt);
-    if(idx >= 0) {
-      this.selected_products.splice(idx, 1);
-      this.last_selected_product = null;
-      this.scroll_state = "scrolled-up";
+  toggleProductSelect(idx: number) {
+    if(this.products[idx]) {
+      this.products[idx].selected = !this.products[idx].selected;
     }
+  }
+  selectProduct(idx: number) {
+    if(this.products[idx]) {
+      this.products[idx].selected = true;
+    }
+  }
+
+  getProductCSS(idx: number) {
+    if(this.products[idx]) {
+      var sp = this.products[idx];
+      return {
+        backgroundColor: sp.selected ? '#2196F3' : '#fff',
+        color: sp.selected ? '#fff' : '#2196F3'
+      };
+    }
+    return null;
+  }
+
+  gotoTab(tab_num: number, idx: number) {
+    this.selected_tab = tab_num;
+    console.log('Selected tab: ', this.selected_tab);
+    this.product_more_info = this.products[idx];
   }
 }

@@ -1,6 +1,7 @@
 .dialog-container {
   width: 700px;
   max-width: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 .dialog-container h3 {
@@ -44,4 +45,45 @@
   transform: translate(-50%, -50%);
   color: #fff;
   font-size: 14px;
+}
+
+.dialog-container form h4 {
+  /*font-weight: normal;*/
+  margin: 0;
+  color: #2196F3;
+  background-color: #fff;
+  padding: 15px 10px;
+  border-radius: 250px;
+  width: 20%;
+  border: 2px solid #2196F3;
+  text-align: center;
+}
+
+.dialog-container form h4.selected {
+  background-color: #2196F3;
+  color: #fff;
+}
+
+.dialog-container .product-inline-info-container {
+  width: 100%;
+  padding: 7.5px 0;
+  transition: height 0.25s ease;
+  will-change: height;
+  /*overflow: hidden;*/
+}
+
+.dialog-container .product-inline-info {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 7.5px 0;
+  /*overflow: hidden;*/
+}
+
+.dialog-container .controls {
+  display: flex;
+  justify-content: space-around;
+  padding: 15px 0;
 }

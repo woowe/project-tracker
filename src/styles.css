@@ -79,6 +79,15 @@ md-tab-body {
   text-align: center;
 }
 
+.dialog-container md-tab-body {
+  background-color: #fff;
+  color: #000;
+}
+
+.dialog-container md-tab-header {
+  display: none;
+}
+
 /*.cdk-overlay-container {
   position: fixed;
   top: 0;
