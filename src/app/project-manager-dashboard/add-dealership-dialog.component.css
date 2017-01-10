@@ -4,7 +4,12 @@
   font-family: 'Roboto', sans-serif;
 }
 
-.dialog-container h3 {
+/*.dialog-container md-tab {
+  max-height: 82vh;
+}*/
+
+.dialog-container h3,
+.dialog-container h2 {
   font-weight: normal;
 }
 

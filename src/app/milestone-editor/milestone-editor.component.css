@@ -1,0 +1,46 @@
+/*md-list {
+  max-height: 65vh;
+}*/
+
+md-input {
+  margin: 7.5px;
+}
+
+.milestone-list h3 {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+}
+
+.milestone-list h3 span {
+  border-radius: 50%;
+  background: #2196F3;
+  /*color: #fff;*/
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+  margin-right: 15px;
+}
+.milestone-list h3 span::before {
+  content: attr(data-idx);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 14px;
+}
+
+.milestone-list .milestone-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.milestone-list .milestone-header .controls button[md-button] {
+  min-width: 0px;
+}

@@ -47,19 +47,12 @@
         <span>{{ (product_more_info)?.name }}</span>
       </md-toolbar>
       <div class="controls">
-        <!-- <md-select (click)="selectProduct(i)" placeholder="Type">
-          <md-option *ngFor="let type of product_more_info?.p_template?.types; let j = index" [value]="j">
-            {{ type.name }}
-          </md-option>
-        </md-select>
-        <md-select (click)="selectProduct(i)" placeholder="Milestones">
-          <md-option *ngFor="let milestone of milestone_templates; let k = index" [value]="k">
-            {{ milestone.name }}
-          </md-option>
-        </md-select> -->
       </div>
       <div class="milestone-editor">
-        <h4>Milestones:</h4>
+        <!-- <h2>Milestones:</h2> -->
+        <div class="milestone-editor-container" *ngIf="product_more_info">
+          <app-milestone-editor [(milestoneModel)]="product_more_info.selected_milestone"></app-milestone-editor>
+        </div>
       </div>
     </md-tab>
   </md-tab-group>

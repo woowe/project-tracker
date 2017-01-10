@@ -1,3 +1,27 @@
-<p>
-  milestone-editor works!
-</p>
+
+<md-list class="milestone-list">
+  <md-list-item style="flex-wrap: wrap;" *ngFor="let milestone of milestone_model?.milestones; let i = index">
+    <div class="milestone-header">
+      <h3><span [attr.data-idx]="i + 1"></span>{{ milestone.name }}</h3>
+      <div class="controls">
+        <button md-button color="primary">
+          <i class="material-icons">arrow_upward</i>
+        </button>
+        <button md-button color="primary">
+          <i class="material-icons">arrow_downward</i>
+        </button>
+        <button md-button [mdMenuTriggerFor]="menu"><i class="material-icons">more_vert</i></button>
+        <md-menu #menu="mdMenu">
+          <button md-menu-item>Insert Above</button>
+          <button md-menu-item>Insert Below</button>
+          <button md-menu-item>Remove</button>
+        </md-menu>
+      </div>
+    </div>
+    <md-input style="flex-basis: 100%" [(ngModel)]="milestone.name" placeholder="Name"></md-input>
+    <md-input style="flex-grow:1;" [(ngModel)]="milestone.status" placeholder="Status"></md-input>
+    <md-input style="flex-grow:1;" [(ngModel)]="milestone.points" placeholder="Points"></md-input>
+    <md-input style="flex-grow:1;" [(ngModel)]="milestone.days_differential" placeholder="Days Differential"></md-input>
+    <md-input style="flex-basis:100%"[(ngModel)]="milestone.description" placeholder="Description"></md-input>
+  </md-list-item>
+</md-list>

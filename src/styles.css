@@ -82,10 +82,17 @@ md-tab-body {
 .dialog-container md-tab-body {
   background-color: #fff;
   color: #000;
+  max-height: 82vh;
 }
 
 .dialog-container md-tab-header {
   display: none;
+}
+
+.md-list-item {
+  flex-wrap: wrap;
+  padding: 0 7.5px;
+  height: auto !important;
 }
 
 /*.cdk-overlay-container {

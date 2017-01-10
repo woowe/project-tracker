@@ -72,9 +72,9 @@ export class AddDealershipDialog {
   milestone_templates: any[] = [];
   scroll_state: string = "scrolled-down";
   selected_tab: number = 0;
-  product_more_info: any = null;
+  product_more_info: any = { name: null, selected: false, selected_milestone: null, selected_type: null };
   constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
-    this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false }; });
+    this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false, selected_milestone: null, selected_type: null }; });
     this.userInfo.getAllProductTemplates().subscribe(templates => {
       for(let template of templates){
         var p = this.products.findIndex(v => { return v.name === template.name });
