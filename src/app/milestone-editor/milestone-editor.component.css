@@ -1,18 +1,43 @@
-/*md-list {
-  max-height: 65vh;
-}*/
-
-md-input {
-  margin: 7.5px;
+md-list {
+  max-height: 71vh;
+  overflow: auto;
 }
 
-.milestone-list h3 {
+.list-container {
+  position: relative;
+}
+
+md-input-container {
+  margin: 5px 7.5px;
+}
+
+md-card {
+  position: fixed;
+  right: 15px;
+  bottom: 15px;
+  z-index: 1;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,.2), 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12);
+  overflow: hidden;
+}
+
+md-card button[md-fab] {
+  position: absolute;
+  right: 0px;
+  bottom: 11px;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+md-card button[md-fab].primary {
+  color: #2196F3;
+}
+
+.list-container h3 {
   display: flex;
   align-items: center;
   font-weight: normal;
 }
 
-.milestone-list h3 span {
+.list-container h3 span {
   border-radius: 50%;
   background: #2196F3;
   /*color: #fff;*/
@@ -23,7 +48,7 @@ md-input {
   position: relative;
   margin-right: 15px;
 }
-.milestone-list h3 span::before {
+.list-container h3 span::before {
   content: attr(data-idx);
   position: absolute;
   top: 50%;
@@ -33,14 +58,27 @@ md-input {
   font-size: 14px;
 }
 
-.milestone-list .milestone-header {
+.list-container .milestone-header {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  /*margin-top: 25px;*/
+}
+
+.list-container .milestone-list .milestone-header {
   margin-top: 25px;
 }
 
-.milestone-list .milestone-header .controls button[md-button] {
+/*md-list-item:hover .milestone-header .controls {
+  opacity: 1;
+}
+
+md-list-item .milestone-header .controls {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}*/
+
+.list-container .milestone-header .controls button[md-button] {
   min-width: 0px;
 }
