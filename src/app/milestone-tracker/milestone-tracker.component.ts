@@ -45,6 +45,20 @@ export class MilestoneTrackerComponent implements OnInit, AfterViewInit {
     return 'event';
   }
 
+  getIcon(status) {
+    switch(status) {
+      case 'In Progress':
+        return 'loop';
+      case 'Needs Attention':
+        return 'error';
+      case 'Complete':
+        return 'done';
+      default:
+        break;
+    }
+    return '';
+  }
+
   ngOnInit() {
     this.products = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v } });
   }

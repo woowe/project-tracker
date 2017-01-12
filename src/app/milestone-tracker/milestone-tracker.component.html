@@ -35,7 +35,7 @@
                 [@milestoneFlyIn]="product.milestone_state"
                 [class]="getClass(milestone.status)"
                 [attr.data-date]="getDate(product.product | async, milestone) | date:'shortDate'">
-                  <h3>{{milestone.name}}</h3>
+                  <h3><i class="material-icons">{{getIcon(milestone.status)}}</i>{{milestone.name}}</h3>
                   <p>{{milestone.description}}</p>
                 </li>
               </ul>

@@ -116,6 +116,8 @@ md-card {
   font-weight: 600;
 }
 
+
+
 .timeline .event {
   /*border-bottom: 1px solid rgba(160, 160, 160, 0.2);*/
   padding-bottom: 15px;
@@ -178,6 +180,24 @@ md-card {
 .timeline .event.complete:after {
   box-shadow: 0 0 0 8px #66BB6A;
 }
+
+.timeline .event h3 {
+  display: flex;
+  align-items: center;
+}
+
+.timeline .event h3 i {
+  margin-right: 10px;
+  color: #42A5F5;
+}
+
+.timeline .event.needs-attention h3 i {
+  color: #EF5350;
+}
+.timeline .event.complete h3 i {
+  color: #66BB6A;
+}
+
 /**/
 /*——————————————
 Responsive Stuff
