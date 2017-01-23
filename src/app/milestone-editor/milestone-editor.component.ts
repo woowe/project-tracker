@@ -49,18 +49,23 @@ import {
 })
 export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   milestone_model: any;
+  add_model: any = {};
   button_state = "in";
   add_form_state = "out";
   form_state = "out";
   previous_scroll = 0;
 
+  undo_history: any[] = [];
+  redo_history: any[] = [];
+
   @ViewChild('addFabButton') button;
   @Output() milestoneModelChange = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    // console.log(this._renderer.selectRootElement('button'));
+    // console.log(this._renderer.selectRootElement('button'))
+
     console.log(this.button._elementRef.nativeElement);
   }
 
@@ -73,6 +78,9 @@ export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   }
 
   set milestoneModel(model: any) {
+    if(model) {
+      model.milestones = this._sortMilestones(model.milestones);
+    }
     this.milestone_model = model;
     this.milestoneModelChange.emit(this.milestone_model);
   }
@@ -80,6 +88,52 @@ export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   _getAddFabButton() {
     // console.log(this.button.nativeElement);
     return this.button._elementRef.nativeElement;
+  }
+
+  _sortMilestones(milestones: any[]): any[] {
+    var sum_diff = 0;
+    for(var i = 0; i < milestones.length; ++i) {
+      sum_diff += Math.abs(milestones[i].days_differential);
+    }
+    return milestones.sort((a, b) => {
+      a = a.days_differential;
+      b = b.days_differential;
+
+      if(Math.sign(a) == -1) {
+        a += sum_diff;
+      }
+
+      if(Math.sign(b) == -1) {
+        b += sum_diff;
+      }
+
+      return Math.abs(a) - Math.abs(b);
+    })
+  }
+
+  onUndo() {
+    if (this.undo_history.length > 0) {
+      var recent_state = Object.assign({}, this.undo_history.pop());
+      this.redo_history.push(JSON.parse(JSON.stringify(this.milestone_model)));
+      this.milestoneModelChange.emit(Object.assign({}, recent_state));
+    }
+  }
+
+  onRedo() {
+    if (this.redo_history.length > 0) {
+      var recent_state = Object.assign({}, this.redo_history.pop());
+      this.undo_history.push(JSON.parse(JSON.stringify(this.milestone_model)));
+      this.milestoneModelChange.emit(Object.assign({}, recent_state));
+    }
+  }
+
+  onSave() {
+    this.milestoneModelChange.emit(this.milestone_model);
+  }
+
+  onRemove(idx: number) {
+    this.undo_history.push(JSON.parse(JSON.stringify(this.milestone_model)));
+    this.milestone_model.milestones.splice(idx, 1);
   }
 
   onValueChange(v: any): void {
@@ -99,10 +153,14 @@ export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   }
 
   onAddFormAdd() {
+    this.undo_history.push(JSON.parse(JSON.stringify(this.milestone_model)));
+    this.milestone_model.milestones.push(this.add_model);
+    this.milestone_model.milestones = this._sortMilestones(this.milestone_model.milestones);
+    this.add_model = {};
   }
 
   onAddFormClear() {
-
+    this.add_model = {};
   }
 
   onListScroll(e) {

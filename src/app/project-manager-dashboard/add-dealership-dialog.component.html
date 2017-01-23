@@ -34,16 +34,16 @@
                 {{ milestone.name }}
               </md-option>
             </md-select>
-            <button (click)="selectProduct(i) + gotoTab(1, i)" md-button color="primary">More&nbsp;<i class="material-icons">keyboard_arrow_right</i></button>
+            <button (click)="selectProduct(i) + gotoTab(1, i)" md-button color="primary">More&nbsp;<i class="material-icons">chevron_right</i></button>
           </div>
         </div>
         <h3><span data-idx="3"></span> Add People</h3>
-        <button type="submit" md-raised-button color="primary">ADD</button>
+        <button type="submit" md-raised-button color="primary">ADD DEALERSHIP</button>
       </form>
     </md-tab>
     <md-tab label="">
       <md-toolbar style="background-color: #fff">
-        <button (click)="gotoTab(0)" md-button color="primary"><i class="material-icons">keyboard_backspace</i></button>
+        <button (click)="gotoTab(0)" md-button color="primary"><i class="material-icons">arrow_back</i></button>
         <span>{{ (product_more_info)?.name }}</span>
       </md-toolbar>
       <div class="controls">

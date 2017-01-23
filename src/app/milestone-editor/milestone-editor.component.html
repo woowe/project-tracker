@@ -1,80 +1,84 @@
 
 <div class="list-container">
-  <md-list class="milestone-list" (scroll)="onListScroll($event)">
-    <md-list-item style="flex-wrap: wrap;" *ngFor="let milestone of milestone_model?.milestones; let i = index">
-      <div class="milestone-header">
-        <h3><span [attr.data-idx]="i + 1"></span>{{ milestone.name }}</h3>
-        <div class="controls">
-          <button md-button color="primary">
-            <i class="material-icons">arrow_upward</i>
-          </button>
-          <button md-button color="primary">
-            <i class="material-icons">arrow_downward</i>
-          </button>
-          <button md-button [mdMenuTriggerFor]="menu"><i class="material-icons">more_vert</i></button>
-          <md-menu #menu="mdMenu">
-            <button md-menu-item>Insert Above</button>
-            <button md-menu-item>Insert Below</button>
-            <button md-menu-item>Remove</button>
-          </md-menu>
+  <div class="editor-controls">
+    <div class="">
+      <button color="primary" md-button (click)="onUndo()" type="button" name="button">
+        <md-icon fontSet="material-icons">undo</md-icon>
+      </button>
+      <button color="primary" md-button (click)="onRedo()" type="button" name="button">
+        <md-icon fontSet="material-icons">redo</md-icon>
+      </button>
+    </div>
+    <!-- <button color="primary" md-raised-button (click)="onSave()" type="button" name="button">
+      SAVE
+    </button> -->
+  </div>
+  <div class="list-viewport">
+    <md-list class="milestone-list" (scroll)="onListScroll($event)">
+      <md-list-item style="flex-wrap: wrap" *ngFor="let milestone of milestone_model?.milestones; let i = index">
+        <div class="milestone-header" md-line>
+          <h3><span [attr.data-idx]="i + 1"></span>{{ milestone.name }}</h3>
+          <div class="controls">
+            <button md-button color="warn" (click)="onRemove(i)">
+              <i class="material-icons">closed</i>
+            </button>
+          </div>
         </div>
-      </div>
-      <md-input-container style="flex-basis: 100%">
-        <input md-input [(ngModel)]="milestone.name" placeholder="Name" />
-      </md-input-container>
-      <md-input-container style="flex-grow:1;">
-        <input md-input [(ngModel)]="milestone.status" placeholder="Status" />
-      </md-input-container>
-      <md-input-container style="flex-grow:1;">
-        <input md-input [(ngModel)]="milestone.points" placeholder="Points" />
-      </md-input-container>
-      <md-input-container style="flex-grow:1;">
-        <input md-input [(ngModel)]="milestone.days_differential" placeholder="Days Differential" />
-      </md-input-container>
-      <md-input-container style="flex-basis:100%">
-        <textarea md-input [(ngModel)]="milestone.description" placeholder="Description" ></textarea>
-      </md-input-container>
-    </md-list-item>
-  </md-list>
-  <md-card [@addFormState]="add_form_state">
-    <button (click)="onAddFabClicked()" #addFabButton [@buttonState]="button_state" md-fab>
-      <md-icon>add</md-icon>
-    </button>
-    <div class="" [@formState]="form_state">
-      <div class="milestone-header">
-        <h3><span class="material-icons" data-idx="&#xE145;"></span>Add Milestone</h3>
-        <div class="controls">
-          <button md-button color="primary" (click)="onAddFormCancel()">
-            Cancel
-          </button>
-          <button md-button color="primary">
-            Add
-          </button>
-          <button md-button color="primary">
-            Clear
-          </button>
-        </div>
-      </div>
-      <div style="width:100%; display: flex; flex-wrap: wrap;">
-        <md-input-container style="flex-basis: calc(15% - 15px)">
-          <input md-input placeholder="Step" />
+        <md-input-container style="flex-basis: 100%">
+          <input md-input [(ngModel)]="milestone.name" placeholder="Name" />
         </md-input-container>
-        <md-input-container style="flex-basis: calc(85% - 15px)">
-          <input md-input placeholder="Name" />
+        <md-input-container style="flex-grow:1;">
+          <input md-input [(ngModel)]="milestone.status" placeholder="Status" />
         </md-input-container>
-        <md-input-container style="flex-basis: calc(33.333% - 15px)">
-          <input md-input placeholder="Status" />
+        <md-input-container style="flex-grow:1;">
+          <input md-input type="number" [(ngModel)]="milestone.points" placeholder="Points" />
         </md-input-container>
-        <md-input-container style="flex-basis: calc(33.333% - 15px)">
-          <input md-input placeholder="Points" />
-        </md-input-container>
-        <md-input-container style="flex-basis: calc(33.333% - 15px)">
-          <input md-input placeholder="Days Differential" />
+        <md-input-container style="flex-grow:1;">
+          <input #dayDiff md-input type="number" [(ngModel)]="milestone.days_differential" placeholder="Days Differential" />
+          <md-hint style="color: #2196F3;" align="end">{{ dayDiff.value == "0" ? "Zero means on the start day" : "" }}</md-hint>
         </md-input-container>
         <md-input-container style="flex-basis:100%">
-          <textarea md-input placeholder="Description" ></textarea>
+          <textarea md-input [(ngModel)]="milestone.description" placeholder="Description" ></textarea>
         </md-input-container>
+      </md-list-item>
+    </md-list>
+    <md-card [@addFormState]="add_form_state">
+      <button (click)="onAddFabClicked()" #addFabButton [@buttonState]="button_state" md-fab>
+        <md-icon>add</md-icon>
+      </button>
+      <div class="" [@formState]="form_state">
+        <div class="milestone-header">
+          <h3><span class="material-icons" data-idx="&#xE145;"></span>Add Milestone</h3>
+          <div class="controls">
+            <button md-button color="primary" (click)="onAddFormCancel()">
+              Cancel
+            </button>
+            <button md-button color="primary" (click)="onAddFormAdd()">
+              Add
+            </button>
+            <button md-button color="primary" (click)="onAddFormClear()">
+              Clear
+            </button>
+          </div>
+        </div>
+        <div style="width:100%; display: flex; flex-wrap: wrap;">
+          <md-input-container style="flex-basis: calc(100% - 15px)">
+            <input md-input [(ngModel)]="add_model.name" placeholder="Name" />
+          </md-input-container>
+          <md-input-container style="flex-basis: calc(33.333% - 15px)">
+            <input md-input [(ngModel)]="add_model.status" placeholder="Status" />
+          </md-input-container>
+          <md-input-container style="flex-basis: calc(33.333% - 15px)">
+            <input md-input type="number" [(ngModel)]="add_model.points" placeholder="Points" />
+          </md-input-container>
+          <md-input-container style="flex-basis: calc(33.333% - 15px)">
+            <input md-input type="number" [(ngModel)]="add_model.days_differential" placeholder="Days Differential" />
+          </md-input-container>
+          <md-input-container style="flex-basis:100%">
+            <textarea md-input [(ngModel)]="add_model.description" placeholder="Description" ></textarea>
+          </md-input-container>
+        </div>
       </div>
-    </div>
-  </md-card>
+    </md-card>
+  </div>
 </div>

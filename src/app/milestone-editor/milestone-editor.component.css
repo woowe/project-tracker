@@ -1,10 +1,29 @@
+.editor-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 12px 16px;
+
+}
+
+
+.list-viewport {
+  flex-grow: 1;
+  flex-shrink: 1;
+  position: relative;
+  overflow: hidden;
+}
 md-list {
-  max-height: 71vh;
+  max-height: 64vh;
+  /*flex-grow: 1;*/
   overflow: auto;
 }
 
 .list-container {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
 }
 
 md-input-container {
@@ -41,12 +60,12 @@ md-card button[md-fab].primary {
   border-radius: 50%;
   background: #2196F3;
   /*color: #fff;*/
-  width: 25px;
-  height: 25px;
+  width: 35px;
+  height: 35px;
   display: inline-block;
   text-align: center;
   position: relative;
-  margin-right: 15px;
+  margin-right: 32px;
 }
 .list-container h3 span::before {
   content: attr(data-idx);
@@ -55,7 +74,7 @@ md-card button[md-fab].primary {
   left: 50%;
   transform: translate(-50%, -50%);
   color: #fff;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .list-container .milestone-header {
@@ -67,7 +86,7 @@ md-card button[md-fab].primary {
 }
 
 .list-container .milestone-list .milestone-header {
-  margin-top: 25px;
+  /*margin-top: 25px;*/
 }
 
 /*md-list-item:hover .milestone-header .controls {
