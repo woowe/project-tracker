@@ -3,6 +3,7 @@ import { Component, OnInit, trigger, state, style, transition, animate } from '@
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
 import { UserInfoService } from '../services/UserInfo/user-info.service';
+import { CustomerService } from '../services/Customer/customer.service';
 import { FirebaseObjectObservable } from 'angularfire2';
 
 import { Observable } from "rxjs/Rx";
@@ -29,7 +30,7 @@ import { Observable } from "rxjs/Rx";
 export class ProductSelectionComponent implements OnInit {
   product_info: any[];
 
-  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) {}
+  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService, private customer: CustomerService) {}
 
   polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     var angleInRadians = (angleInDegrees-90) * Math.PI / 180.0;
@@ -74,12 +75,15 @@ export class ProductSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.product_info = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v, arc_state: "start", product_state: "start" } });
+    Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
+      this.customer.getCustomerInfo(auth);
+    });
     var p, m;
     p = this.userInfo.products;
     m = this.userInfo.milestones;
     p.combineLatest(m).subscribe(([products, milestones]) => {
       if(products && milestones) {
-        console.log("COMBINED: ", products, milestones);
+        // console.log("COMBINED: ", products, milestones);
         for(var i = 0; i < products.length; ++i) {
           this.product_info[i].milestone = milestones[i];
           this.product_info[i].product = products[i];
@@ -87,10 +91,10 @@ export class ProductSelectionComponent implements OnInit {
           if(products[i] && milestones[i]) {
             var idx = i;
             products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
-              console.log('COMBINDED SINGLE', product, milestone, this.product_info);
+              // console.log('COMBINDED SINGLE', product, milestone, this.product_info);
               this.product_info[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
               this.product_info[idx].completion_info.subscribe(info => {
-                console.log('INFO', info);
+                // console.log('INFO', info);
                 if(info.status !== "On Schedule") {
                   this.product_info[idx].arc_state = "end-bad";
                   this.product_info[idx].product_state = "end-bad";

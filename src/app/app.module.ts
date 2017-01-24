@@ -11,6 +11,8 @@ import { LoginComponent } from './login/login.component';
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { ProductLogosService } from './services/ProductLogos/product-logos.service';
+import { CustomerService } from './services/Customer/customer.service';
+import { ProjectManagerService } from './services/ProjectManager/project-manager.service';
 import { AuthGuardService } from './services/AuthGuards/auth-guard.service';
 import { UserInfoService } from './services/UserInfo/user-info.service';
 
@@ -24,6 +26,8 @@ import { IsProductPipe } from './pipes/is_product.pipe';
 import { MilestoneTrackerComponent } from './milestone-tracker/milestone-tracker.component';
 import { ProjectManagerDashboardComponent, AddDealershipDialog } from './project-manager-dashboard/project-manager-dashboard.component';
 import { MilestoneEditorComponent } from './milestone-editor/milestone-editor.component';
+import { FindPeopleComponent } from './find-people/find-people.component';
+import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -58,7 +62,9 @@ const appRoutes: Routes = [
     MilestoneTrackerComponent,
     ProjectManagerDashboardComponent,
     AddDealershipDialog,
-    MilestoneEditorComponent
+    MilestoneEditorComponent,
+    FindPeopleComponent,
+    AutoCompleteComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +81,9 @@ const appRoutes: Routes = [
   providers: [
     ProductLogosService,
     UserInfoService,
-    AuthGuardService
+    AuthGuardService,
+    CustomerService,
+    ProjectManagerService
   ],
   bootstrap: [ AppComponent ]
 })

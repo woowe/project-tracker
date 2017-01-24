@@ -10,6 +10,8 @@ export class UserInfoService {
   _info: FirebaseObjectObservable<any>;
   _login_observable: BehaviorSubject<boolean>;
 
+  auth_val: any;
+
   _project_manager: FirebaseObjectObservable<any>;
   _dealership: FirebaseObjectObservable<any>;
   _milestones: BehaviorSubject<any>;
@@ -29,6 +31,7 @@ export class UserInfoService {
   login(email: string, password: string, success: any, error: any) {
     this.af.auth.login({email: email, password: password},{ provider: AuthProviders.Password, method: AuthMethods.Password})
     .then(_success => {
+      this.auth_val = _success;
       this._info = this.af.database.object(`/Users/${_success.uid}`);
       this._info.subscribe(info => {
 
@@ -37,20 +40,20 @@ export class UserInfoService {
           this._project_manager = this.af.database.object(`/Users/${info.project_manager}`);
           this._dealership = this.af.database.object(`/Dealerships/${info.dealership}`);
           this._dealership.subscribe(dealership_info => {
-            console.log('Found Dealership: ', dealership_info);
+            // console.log('Found Dealership: ', dealership_info);
             var products: FirebaseObjectObservable<any>[] = Array.apply(null, Array(5)).map(function () {});
             var milestones: FirebaseObjectObservable<any>[] = Array.apply(null, Array(5)).map(function () {});
             var cnt = 0;
             var pl = dealership_info.products.length;
-            console.log("NUMBER OF PRODUCTS", pl);
+            // console.log("NUMBER OF PRODUCTS", pl);
             for(let idx in dealership_info.products) {
               products[idx] = this.af.database.object(`/Product Building/${dealership_info.products[idx]}`);
               products[idx].subscribe(product_info => {
-                console.log('Found Product: ', product_info);
+                // console.log('Found Product: ', product_info);
                 var i = parseInt(product_info.type);
                 milestones[i] = this.af.database.object(`/Milestone Building/${product_info.template}`);
                 milestones[i].subscribe(milestone_info => {
-                  console.log("Found milestone: ", milestone_info);
+                  // console.log("Found milestone: ", milestone_info);
                 });
 
                 if( cnt >= pl - 1 ) {
