@@ -4,8 +4,8 @@
       <div class="product-container" *ngFor="let product of product_info; let i = index">
       <a routerLink="/milestone-tracker">
         <div class="activation-date">
-          <h4 *ngIf="(product.product | async)">Product Activation Date:</h4>
-          <h4 *ngIf="(product.product | async)">{{ (product.product | async)?.activation }}</h4>
+          <h4 *ngIf="(product.product)">Product Activation Date:</h4>
+          <h4 *ngIf="(product.product)">{{ (product.product)?.activation }}</h4>
         </div>
         <div class="circle-container">
           <svg width="250" height="250" viewBox="0 0 100 100">
@@ -16,24 +16,24 @@
               </linearGradient>
             </defs>
             <!-- (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 :  -->
-            <path [attr.d]="describeArc(50, 50, 43.5, 0, (product.completion_info | async) ? (product.completion_info | async)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="product.arc_state"
+            <path [attr.d]="describeArc(50, 50, 43.5, 0, (product.completion_info) ? (product.completion_info)?.percent_complete / 100 * 360 : 0)" [@arcLoad]="product.arc_state"
             fill="transparent" stroke-width="6"/>
             <circle r="43" cx="50" cy="50" fill="url(#grad1) #42A5F5"/>
           </svg>
           <span><i class="material-icons">{{getIcon(product.logo_info.alt)}}</i></span>
-          <div *ngIf="product.completion_info | async" class="completion-container">
-            <div>{{ (product.completion_info | async)?.percent_complete.toFixed(0) }}% Complete</div>
+          <div *ngIf="product.completion_info" class="completion-container">
+            <div>{{ (product.completion_info)?.percent_complete.toFixed(0) }}% Complete</div>
           </div>
         </div>
         <div class="logo-container">
           <img [src]="product.logo_info.path" [alt]="product.logo_info.alt">
         </div>
-        <div *ngIf="product.completion_info | async" class="attention-container">
+        <div *ngIf="product.completion_info" class="attention-container">
           <div class="product-status" [@productState]="product.product_state">
-            {{(product.completion_info | async)?.status}}
+            {{(product.completion_info)?.status}}
           </div>
           <ul>
-            <li class="" *ngFor="let am of (product.completion_info | async)?.need_attenion_milestones">
+            <li class="" *ngFor="let am of (product.completion_info)?.need_attenion_milestones">
               -&nbsp;&nbsp;{{am}}
             </li>
           </ul>
@@ -48,19 +48,19 @@
   <div class="pm-contact">
     <div>
       <span>
-        <i class="material-icons">person</i>{{(userInfo.project_manager | async)?.name}}
+        <i class="material-icons">person</i>{{(customer.project_manager)?.name}}
       </span>
     </div>
     <div>
       <span>
         <i class="material-icons">email</i>
-        <a href="mailto: {{(userInfo.project_manager | async)?.email}}">{{(userInfo.project_manager | async)?.email}}</a>
+        <a href="mailto: {{(customer.project_manager)?.email}}">{{(customer.project_manager)?.email}}</a>
       </span>
     </div>
     <div>
       <span>
         <i class="material-icons">phone</i>
-        <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format:false}}">{{((userInfo.project_manager | async)?.phone | phone_format:true)}}</a>
+        <a href="tel: {{(customer.project_manager)?.phone | phone_format:false}}">{{((customer.project_manager)?.phone | phone_format:true)}}</a>
       </span>
     </div>
     <img [src]="productLogos.getLogo('DealerSocket').path" [alt]="productLogos.getLogo('DealerSocket').alt">

@@ -75,39 +75,26 @@ export class ProductSelectionComponent implements OnInit {
 
   ngOnInit() {
     this.product_info = this.productLogos.getProductLogos().map(function (v) { return { logo_info: v, arc_state: "start", product_state: "start" } });
-    Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
-      this.customer.getCustomerInfo(auth);
-    });
-    var p, m;
-    p = this.userInfo.products;
-    m = this.userInfo.milestones;
-    p.combineLatest(m).subscribe(([products, milestones]) => {
-      if(products && milestones) {
-        // console.log("COMBINED: ", products, milestones);
-        for(var i = 0; i < products.length; ++i) {
-          this.product_info[i].milestone = milestones[i];
-          this.product_info[i].product = products[i];
+    Observable.from(this.userInfo.auth)
+      .filter(auth => auth != null)
+      .first()
+      .mergeMap(auth => this.customer.getCustomerInfo(auth))
+      .mergeAll()
+      .subscribe(({idx, product, milestones}) => {
 
-          if(products[i] && milestones[i]) {
-            var idx = i;
-            products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
-              // console.log('COMBINDED SINGLE', product, milestone, this.product_info);
-              this.product_info[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
-              this.product_info[idx].completion_info.subscribe(info => {
-                // console.log('INFO', info);
-                if(info.status !== "On Schedule") {
-                  this.product_info[idx].arc_state = "end-bad";
-                  this.product_info[idx].product_state = "end-bad";
-                } else {
-                  this.product_info[idx].arc_state = "end-good";
-                  this.product_info[idx].product_state = "end-good";
-                }
-              })
-            });
-          }
+        console.log("IDX, PRODUCT, MILESTONES", idx, product, milestones);
+        this.product_info[idx].milestones = milestones;
+        this.product_info[idx].product = product;
+        this.product_info[idx].completion_info = this.customer.calculateMilestoneCompletion(product, milestones);
 
+        if(this.product_info[idx].status !== "On Schedule") {
+          this.product_info[idx].arc_state = "end-bad";
+          this.product_info[idx].product_state = "end-bad";
+        } else {
+          this.product_info[idx].arc_state = "end-good";
+          this.product_info[idx].product_state = "end-good";
         }
-      }
-    });
+
+      });
   }
 }
