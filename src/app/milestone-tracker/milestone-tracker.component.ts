@@ -5,7 +5,10 @@ import { MdDialog, MdDialogRef, MdSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
 import { UserInfoService } from '../services/UserInfo/user-info.service';
+import { CustomerService } from '../services/Customer/customer.service';
 import { FirebaseObjectObservable } from 'angularfire2';
+
+import { Observable } from "rxjs/Rx";
 
 @Component({
   selector: 'app-milestone-tracker',
@@ -22,11 +25,11 @@ import { FirebaseObjectObservable } from 'angularfire2';
 })
 export class MilestoneTrackerComponent implements OnInit, AfterViewInit {
   products;
-  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService) { }
+  constructor(private productLogos: ProductLogosService, private router: Router, private userInfo: UserInfoService, private customer: CustomerService) { }
 
   getDate(product, milestone) {
     if(product && milestone) {
-      return this.userInfo.getDayDiff(Date.parse(product.started), Date.parse(product.activation), milestone.days_differential);
+      return this.customer.getDayDiff(Date.parse(product.started), Date.parse(product.activation), milestone.days_differential);
     }
     return null;
   }
@@ -70,28 +73,23 @@ export class MilestoneTrackerComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    var p, m;
-    p = this.userInfo.products;
-    m = this.userInfo.milestones;
-    p.combineLatest(m).subscribe(([products, milestones]) => {
-      if(products && milestones) {
-        for(var i = 0; i < products.length; ++i) {
-          this.products[i].milestone = milestones[i];
-          this.products[i].product = products[i];
-          if(products[i] && milestones[i]) {
-            var idx = i;
-            products[i].combineLatest(milestones[i]).subscribe(([product, milestone]) => {
-              console.log('COMBINDED SINGLE', product, milestone, this.products);
-              this.products[idx].completion_info = this.userInfo.calculateMilestoneCompletion(product, milestone);
-              this.products[idx].completion_info.subscribe(info => {
-                this.products[idx].milestone_state = "in";
-                console.log("AFTER VIEW INIT");
-              })
-            });
-          }
-        }
-      }
-    });
+
+    Observable.from(this.userInfo.auth)
+      .filter(auth => auth != null)
+      .first()
+      .mergeMap(auth => this.customer.getCustomerInfo(auth))
+      .mergeAll()
+      .subscribe(({idx, product, milestones}) => {
+
+        console.log("IDX, PRODUCT, MILESTONES", idx, product, milestones);
+        this.products[idx].milestones = milestones;
+        this.products[idx].product = product;
+        this.products[idx].completion_info = this.customer.calculateMilestoneCompletion(product, milestones);
+        this.products[idx].milestone_state = "in";
+
+        console.log("PRODUCTS", this.products);
+      });
+      
   }
 
 }

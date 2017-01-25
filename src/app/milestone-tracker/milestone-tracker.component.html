@@ -5,23 +5,23 @@
     </template>
     <div class="milestone-content">
       <div>
-        <h2>Projected Activation Date: {{ (product.product | async)?.activation }}</h2>
+        <h2>Projected Activation Date: {{ (product.product)?.activation }}</h2>
         <div class="pm-contact">
           <div>
             <span>
-              <i class="material-icons">person</i>{{(userInfo.project_manager | async)?.name}}
+              <i class="material-icons">person</i>{{(customer.project_manager)?.name}}
             </span>
           </div>
           <div>
             <span>
               <i class="material-icons">email</i>
-              <a href="mailto: {{(userInfo.project_manager | async)?.email}}">{{(userInfo.project_manager | async)?.email}}</a>
+              <a href="mailto: {{(customer.project_manager)?.email}}">{{(customer.project_manager)?.email}}</a>
             </span>
           </div>
           <div>
             <span>
               <i class="material-icons">phone</i>
-              <a href="tel: {{(userInfo.project_manager | async)?.phone | phone_format:false}}">{{((userInfo.project_manager | async)?.phone | phone_format:true)}}</a>
+              <a href="tel: {{(customer.project_manager)?.phone | phone_format:false}}">{{((customer.project_manager)?.phone | phone_format:true)}}</a>
             </span>
           </div>
         </div>
@@ -31,10 +31,10 @@
         <section id="timeline" class="timeline-outer">
             <div class="container" id="content">
               <ul class="timeline">
-                <li *ngFor="let milestone of (product.milestone | async)?.milestones; let i = index"
+                <li *ngFor="let milestone of (product.milestones)?.milestones; let i = index"
                 [@milestoneFlyIn]="product.milestone_state"
                 [class]="getClass(milestone.status)"
-                [attr.data-date]="getDate(product.product | async, milestone) | date:'shortDate'">
+                [attr.data-date]="getDate(product.product, milestone) | date:'shortDate'">
                   <h3><i class="material-icons">{{getIcon(milestone.status)}}</i>{{milestone.name}}</h3>
                   <p>{{milestone.description}}</p>
                 </li>
