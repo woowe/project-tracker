@@ -2,10 +2,11 @@ import { Component, OnInit, trigger, state, style, transition, keyframes, animat
 import { Router } from '@angular/router';
 import { ProductLogosService } from '../services/ProductLogos/product-logos.service';
 import { UserInfoService } from '../services/UserInfo/user-info.service';
+import { ProjectManagerService } from '../services/ProjectManager/project-manager.service';
 import { AngularFire, AuthProviders, AuthMethods, FirebaseObjectObservable } from 'angularfire2';
 import { MdDialog, MdDialogRef } from '@angular/material';
 
-import { BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-project-manager-dashboard',
@@ -18,16 +19,17 @@ export class ProjectManagerDashboardComponent implements OnInit {
   dealerships: BehaviorSubject<any>;
 
   constructor(private productLogos: ProductLogosService, public af: AngularFire, private router: Router,
-              private userInfo: UserInfoService, public dialog: MdDialog) { }
+              private userInfo: UserInfoService, public dialog: MdDialog, private projectManager: ProjectManagerService) { }
 
   ngOnInit() {
-    this.userInfo.login_observable.subscribe(loggedIn => {
-      console.log('Login observable: ', loggedIn);
-      if(loggedIn) {
-        this.info = this.userInfo.info;
-        this.dealerships = this.userInfo.dealerships;
-        this.openDialog();
-      }
+    Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
+      console.log('Logged in', auth);
+      this.projectManager.getProjectManagerInfo(auth).subscribe(d => {
+        console.log('D: ', d);
+      });
+      this.info = this.userInfo.info;
+      this.dealerships = this.userInfo.dealerships;
+      this.openDialog();
     });
   }
 
@@ -74,6 +76,7 @@ export class AddDealershipDialog {
   selected_tab: number = 0;
   product_more_info: any = { name: null, selected: false, selected_milestone: null, selected_type: null };
   constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
+
     this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false, selected_milestone: null, selected_type: null }; });
     this.userInfo.getAllProductTemplates().subscribe(templates => {
       for(let template of templates){
