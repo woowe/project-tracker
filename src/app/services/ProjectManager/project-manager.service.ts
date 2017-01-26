@@ -35,20 +35,23 @@ export class ProjectManagerService {
         })
         .subscribe(info => {
           this._dealerships = Observable.from(info.dealerships)
-            .switchMap(dealership_uid => this.af.database.object(`/Dealerships/${dealership_uid}`)
+            .mergeMap(dealership_uid => this.af.database.object(`/Dealerships/${dealership_uid}`)
                       , (dealership_uid, dealership) => ({dealership}))
-            .switchMap(({dealership}) => {
-              console.log("USERS FOUND: ", dealership.users);
-              return Observable.from(dealership.users)
-                .mergeMap(({role, uid}) => this.af.database.object(`/Users/${uid}`))
-                .mergeAll()
-                .map(({role, uid}, user) => { console.log(user); return ({role, user}) });
-            }
+            .mergeMap(({dealership}) =>
+              Observable.from(dealership.users)
+                .mergeMap(({role, uid}) => Observable.from(this.af.database.object(`/Users/${uid}`)), ({role, uid}, user) => ({role, user}) )
+                .take(dealership.users.length)
+                .filter(({role, user}) => user.$key != "undefined")
+                .toArray()
             , ({dealership}, users) => ({dealership, users}))
-            .switchMap(({dealership, users}) =>
+            .mergeMap(({dealership, users}) =>
               Observable.from(dealership.products)
-                .switchMap( uid => this.af.database.object(`/Product Building/${uid}`), (uid, product) => ({product}) )
-              , ({dealership, users}, products) => ({dealership, users, products}) );
+                .mergeMap( uid => this.af.database.object(`/Product Building/${uid}`), (uid, product) => ({product}) )
+                .take(dealership.products.length)
+                .filter(({product}) => product.$key != "undefined")
+                .toArray()
+              , ({dealership, users}, products) => ({dealership, users, products}) )
+              // .mergeAll();
 
           this._dealerships.subscribe(dealership => console.log("Dealership: ", dealership));
 
