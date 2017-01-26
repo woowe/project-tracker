@@ -24,9 +24,12 @@ export class ProjectManagerDashboardComponent implements OnInit {
   ngOnInit() {
     Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
       console.log('Logged in', auth);
-      this.projectManager.getProjectManagerInfo(auth).subscribe(d => {
-        console.log('D: ', d);
-      });
+      this.projectManager.getProjectManagerInfo(auth)
+        .mergeMap( dealerships => dealerships )
+        // .mergeAll()
+        .subscribe(dealership => {
+          console.log("DEALERSHIP INFO: ", this.projectManager.info, dealership);
+        });
       this.info = this.userInfo.info;
       this.dealerships = this.userInfo.dealerships;
       this.openDialog();
