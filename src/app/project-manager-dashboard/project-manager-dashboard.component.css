@@ -43,7 +43,7 @@
   padding: 50px 0;
 }
 .grid .dealership-item {
-  width: calc(25%-30px);
+  width: calc(25% - 30px);
   background: linear-gradient(25deg, rgb(27, 37, 45), rgb(37, 47, 55) 95%);
   color: #fff;
   position: relative;
@@ -72,6 +72,11 @@
 .grid .dealership-item .info a:hover,
 .grid .dealership-item .info a:visited {
   color: #fff;
+}
+
+
+user-slider {
+  width: 100%;
 }
 
 /*.grid .dealership-item .info-overlay {

@@ -26,7 +26,6 @@ import {
       transition("out => in", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
       transition("in => blow-up", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
       transition("blow-up => in", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
-      // transition("void => *", animate("0.45s cubic-bezier(.4, 0, .2, 1)"))
     ]),
     trigger('addFormState', [
       state('out', style({display: 'block', background: 'transparent', padding: '0px', boxShadow: '0 3px 5px -1px rgba(0,0,0,0), 0 6px 10px 0 rgba(0,0,0,0), 0 1px 18px 0 rgba(0,0,0,0)', width: '63px', height: '69px'})),
@@ -36,14 +35,12 @@ import {
       transition("out => in", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
       transition("out => disapear", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
       transition("disapear => out", animate("0.45s cubic-bezier(.4, 0, .2, 1)")),
-      // transition("void => *", animate("0.45s cubic-bezier(.4, 0, .2, 1)"))
     ]),
     trigger('formState', [
       state('out', style({display: 'none', opacity: 0})),
       state('in', style({display: 'block', opacity: 1})),
       transition("out => in", animate("0.2s 0.345s cubic-bezier(.4, 0, .2, 1)")),
       transition("in => out", animate("0.345s cubic-bezier(.4, 0, .2, 1)"))
-      // transition("void => *", animate("280ms cubic-bezier(.4, 0, .2, 1)"))
     ]),
   ]
 })
@@ -64,8 +61,6 @@ export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit() {
-    // console.log(this._renderer.selectRootElement('button'))
-
     console.log(this.button._elementRef.nativeElement);
   }
 
@@ -86,7 +81,6 @@ export class MilestoneEditorComponent implements OnInit, AfterViewInit {
   }
 
   _getAddFabButton() {
-    // console.log(this.button.nativeElement);
     return this.button._elementRef.nativeElement;
   }
 

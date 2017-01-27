@@ -15,8 +15,8 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class ProjectManagerDashboardComponent implements OnInit {
 
-  info: FirebaseObjectObservable<any>;
-  dealerships: BehaviorSubject<any>;
+  info: any;
+  dealerships: any[] = [];
 
   constructor(private productLogos: ProductLogosService, public af: AngularFire, private router: Router,
               private userInfo: UserInfoService, public dialog: MdDialog, private projectManager: ProjectManagerService) { }
@@ -25,14 +25,22 @@ export class ProjectManagerDashboardComponent implements OnInit {
     Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
       console.log('Logged in', auth);
       this.projectManager.getProjectManagerInfo(auth)
-        .mergeMap( dealerships => dealerships )
+        // .mergeMap( dealerships => dealerships )
         // .mergeAll()
-        .subscribe(dealership => {
+        .subscribe((dealership: any) => {
           console.log("DEALERSHIP INFO: ", this.projectManager.info, dealership);
+          if(this.info !== this.projectManager.info) {
+            this.info = this.projectManager.info;
+          }
+          if( dealership.idx > this.dealerships.length) {
+            for(var i = 0; i < dealership.idx - this.dealerships.length; ++i)
+              this.dealerships.push(null);
+          }
+          this.dealerships[dealership.idx] = dealership;
         });
-      this.info = this.userInfo.info;
-      this.dealerships = this.userInfo.dealerships;
-      this.openDialog();
+      // this.info = this.userInfo.info;
+      // this.dealerships = this.userInfo.dealerships;
+      // this.openDialog();
     });
   }
 
@@ -44,6 +52,15 @@ export class ProjectManagerDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('Dialog closed');
     });
+  }
+
+  getPrimaryUser(users: any[]) {
+    for(let user of users) {
+      if(user.role === "primary") {
+        return user.user;
+      }
+    }
+    return null;
   }
 
 }

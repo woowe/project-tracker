@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 /*@import '~@angular/material/core/theming/prebuilt/deeppurple-amber.css';*/
+@import '~primeng/resources/themes/omega/theme.css';
+@import '~primeng/resources/primeng.min.css';
 @import 'unicorn-app-theme.css';
 
 body, html {
@@ -82,7 +84,7 @@ md-tab-body {
 .dialog-container md-tab-body {
   background-color: #fff;
   color: #000;
-  max-height: 82vh;
+  max-height: 83vh;
 }
 
 .dialog-container md-tab-header {

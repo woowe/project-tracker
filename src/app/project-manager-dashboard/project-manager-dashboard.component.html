@@ -1,7 +1,7 @@
 <div class="pm-header">
   <div class="container">
     <div class="left">
-      <h1>{{ (info | async)?.name }}</h1>
+      <h1>{{ (info)?.name }}</h1>
     </div>
   </div>
 </div>
@@ -13,16 +13,20 @@
         <button md-raised-button (click)="openDialog()" color="primary">Add Dealership</button>
       </div>
       <div class="grid">
-        <md-card *ngFor="let dealership of (dealerships | async)" class="dealership-item has-overlay">
-          <h3>{{(dealership | async)?.name}}</h3>
+        <md-card *ngFor="let dealership of dealerships" class="dealership-item has-overlay">
+          <h3>{{ dealership.dealership.name }}</h3>
+          <div class="info">
+            <span>{{ getPrimaryUser(dealership.users).name }}</span>
+          </div>
           <div class="info">
             <i class="material-icons">phone</i>
-            <a href="tel: {{(dealership | async)?.phone | phone_format:false}}">{{((dealership | async)?.phone | phone_format:true)}}</a>
+            <a href="tel: {{ getPrimaryUser(dealership.users).phone | phone_format:false }}">{{ getPrimaryUser(dealership.users).phone | phone_format:true }}</a>
           </div>
           <div class="info">
             <i class="material-icons">email</i>
-            <a href="mailto: {{(dealership | async)?.email}}">{{(dealership | async)?.email}}</a>
+            <a href="mailto: {{ getPrimaryUser(dealership.users).email }}">{{ getPrimaryUser(dealership.users).email }}</a>
           </div>
+          <user-slider [(users)]="dealership.users"></user-slider>
         </md-card>
       </div>
     </div>

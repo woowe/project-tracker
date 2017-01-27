@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 
+import { CarouselModule } from 'primeng/primeng';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
@@ -28,6 +30,7 @@ import { ProjectManagerDashboardComponent, AddDealershipDialog } from './project
 import { MilestoneEditorComponent } from './milestone-editor/milestone-editor.component';
 import { FindPeopleComponent } from './find-people/find-people.component';
 import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
+import { UserSliderComponent } from './user-slider/user-slider.component';
 
 const myFirebaseConfig = {
   apiKey: "AIzaSyC_Qi-DazIAxVyIF_70y_B_80-hS-9tBkI",
@@ -64,7 +67,8 @@ const appRoutes: Routes = [
     AddDealershipDialog,
     MilestoneEditorComponent,
     FindPeopleComponent,
-    AutoCompleteComponent
+    AutoCompleteComponent,
+    UserSliderComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +77,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MaterialModule.forRoot(),
     MdDialogModule,
-    AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig)
+    AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig),
+    CarouselModule
   ],
   entryComponents: [
     AddDealershipDialog

@@ -1,0 +1,15 @@
+<p-carousel [value]="_users" numVisible="1" easing="easeOutStrong">
+    <template let-userInfo pTemplate="item">
+      <div class="info">
+        <span>{{ userInfo.user.name }}</span>
+      </div>
+      <div class="info">
+        <i class="material-icons">phone</i>
+        <a href="tel: {{ userInfo.user.phone | phone_format:false }}">{{ userInfo.user.phone | phone_format:true }}</a>
+      </div>
+      <div class="info">
+        <i class="material-icons">email</i>
+        <a href="mailto: {{ userInfo.user.email }}">{{ userInfo.user.email }}</a>
+      </div>
+    </template>
+</p-carousel>

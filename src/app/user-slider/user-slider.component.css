@@ -1,0 +1,23 @@
+p-carousel {
+  width: 100%;
+  text-align: center;
+  background: transparent;
+  border: none;
+}
+
+p-carousel .info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+p-carousel .info i {
+  margin-right: 10px;
+}
+
+p-carousel .info a,
+p-carousel .info a:visited,
+p-carousel .info a:hover {
+  color: #fff;
+}
