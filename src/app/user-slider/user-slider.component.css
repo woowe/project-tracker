@@ -21,3 +21,48 @@ p-carousel .info a:visited,
 p-carousel .info a:hover {
   color: #fff;
 }
+
+:host p-carousel >>> .ui-widget-content {
+  background: transparent;
+  border: none;
+}
+
+:host p-carousel >>> .ui-widget-content .ui-widget-header {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  max-height: 0px;
+  border: none;
+}
+
+:host p-carousel >>> .ui-widget-content .ui-widget-header .ui-carousel-page-links {
+  display: none;
+}
+
+:host p-carousel >>> .ui-widget-content .ui-carousel-next-button {
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  font-size: calc(1.2rem + 0.4vw);
+  color: #fff;
+  z-index: 1;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  border-radius: 50%;
+  overflow: hidden;
+  /*background: #2196F3;*/
+  margin: 0;
+}
+
+:host p-carousel >>> .ui-widget-content .ui-carousel-prev-button {
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  font-size: calc(1.2rem + 0.4vw);
+  color: #fff;
+  z-index: 1;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  border-radius: 50%;
+  overflow: hidden;
+  /*background: #2196F3;*/
+  margin: 0;
+}

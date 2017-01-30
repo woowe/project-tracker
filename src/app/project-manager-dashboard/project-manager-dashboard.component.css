@@ -68,6 +68,15 @@
   align-items: center;
 }
 
+.grid .dealership-item h3 {
+  margin-bottom: 15px;
+}
+.grid .dealership-item .products {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
 .grid .dealership-item .info a,
 .grid .dealership-item .info a:hover,
 .grid .dealership-item .info a:visited {

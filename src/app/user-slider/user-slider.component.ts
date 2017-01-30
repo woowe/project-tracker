@@ -36,7 +36,7 @@ export class UserSliderComponent implements OnInit {
   }
 
   set users(users: any[]) {
-    console.log("USERS: ", users);
+    // console.log("USERS: ", users);
     if(users) {
       users = this._sortUsers(users);
     }

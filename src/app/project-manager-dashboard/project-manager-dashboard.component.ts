@@ -25,8 +25,6 @@ export class ProjectManagerDashboardComponent implements OnInit {
     Observable.from(this.userInfo.auth).filter(auth => auth != null).first().subscribe(auth => {
       console.log('Logged in', auth);
       this.projectManager.getProjectManagerInfo(auth)
-        // .mergeMap( dealerships => dealerships )
-        // .mergeAll()
         .subscribe((dealership: any) => {
           console.log("DEALERSHIP INFO: ", this.projectManager.info, dealership);
           if(this.info !== this.projectManager.info) {
@@ -37,11 +35,26 @@ export class ProjectManagerDashboardComponent implements OnInit {
               this.dealerships.push(null);
           }
           this.dealerships[dealership.idx] = dealership;
+
         });
-      // this.info = this.userInfo.info;
-      // this.dealerships = this.userInfo.dealerships;
-      // this.openDialog();
     });
+  }
+  
+  getIcon(alt: string): string {
+    switch(alt) {
+      case "DealerSocket":
+        return "trending_up";
+      case "DealerFire":
+        return "dashboard";
+      case "Inventory+":
+        return "search";
+      case "iDMS":
+        return "directions_car";
+      case "Revenue Radar":
+        return "attach_money";
+      default:
+        break;
+    }
   }
 
   openDialog() {
