@@ -116,6 +116,7 @@
 .dialog-container .find-people-controls {
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 24px;
 }
 
 .dialog-container .add-user-controls ,
@@ -125,6 +126,12 @@
 
 .dialog-container .search-controls {
   border-right: 1px solid lightgrey;
+}
+
+.dialog-container .add-user-controls .add-user-form {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
 }
 
 .dialog-container .currently-added {

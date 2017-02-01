@@ -51,7 +51,14 @@
                 </p-autoComplete>
               </div>
               <div class="add-user-controls">
-                <div>Add New Users</div>
+                <div>Add New User</div>
+                <div class="add-user-form">
+                  <md-input dividerColor="accent" #newUserName placeholder="Name"></md-input>
+                  <md-input dividerColor="accent" #newUserEmail placeholder="Email"></md-input>
+                  <md-input dividerColor="accent" #newUserPhone placeholder="Phone"></md-input>
+                  <md-checkbox color="primary" [checked]="primary_contact" (change)="primaryContactChange(event)">Primary Contact?</md-checkbox>
+                  <button (click)="addUser(newUserName.value, newUserEmail.value, newUserPhone.value)" md-button color="primary">Add User</button>
+                </div>
               </div>
             </div>
             <div class="currently-added">

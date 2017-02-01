@@ -8,7 +8,7 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 
-import * as fuzzysearch from 'fuzzysearch';
+import { fuzzysearch } from '../utils/utils';
 
 @Component({
   selector: 'app-project-manager-dashboard',
@@ -119,6 +119,7 @@ export class AddDealershipDialog {
   _user: User;
   filtered_users: any[];
   added_users: any[];
+  primary_contact: boolean = false;
 
 
   constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>, private projectManager: ProjectManagerService) {
@@ -148,7 +149,9 @@ export class AddDealershipDialog {
   }
 
   searchUsers(event) {
-    this.projectManager.getAllUsers().subscribe(users => { this.filtered_users = this.filterUsers(event.query, users); });
+    this.projectManager.getAllUsers().subscribe(users => {
+      this.filtered_users = this.filterUsers(event.query, users);
+    });
   }
 
   filterUsers(query, users) {
@@ -186,5 +189,13 @@ export class AddDealershipDialog {
     this.selected_tab = tab_num;
     console.log('Selected tab: ', this.selected_tab);
     this.product_more_info = this.products[idx];
+  }
+
+  addUser(name: string, email: string, phone: string) {
+    this.projectManager.addUser(name, email, phone, this.primary_contact);
+  }
+
+  primaryContactChange() {
+    this.primary_contact = !this.primary_contact;
   }
 }

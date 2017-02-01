@@ -69,6 +69,11 @@ export class ProjectManagerService {
     return this.af.database.list('/Users/');
   }
 
+  addUser(name: string, email: string, phone: string, primary_contact: boolean) {
+    let user = { name, email, phone, primary_contact, group: 'customer' };
+    this.af.database.list('/Users/').push(user).subscribe(ref => console.log('AFTER USER ADD: ', ref));
+  }
+
   ngOnDestroy() {
   }
 }
