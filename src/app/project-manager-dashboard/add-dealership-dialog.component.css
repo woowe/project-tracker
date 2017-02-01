@@ -14,10 +14,25 @@
 }
 
 .dialog-container form {
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: center;*/
+}
+
+.dialog-container form .main-tab-header {
+  border-bottom: 1px solid lightgrey;
+  padding: 24px 0;
+  font-size: calc(1.1rem + 0.25vw);
+}
+.dialog-container form .main-tab-footer {
+  padding: 24px 0;
+  border-top: 1px solid lightgrey;
+}
+.dialog-container form .main-tab-editor {
+  max-height: 72vh;
+  overflow: auto;
+  padding: 0 24px;
 }
 
 .dialog-container form h3,
@@ -91,4 +106,27 @@
   display: flex;
   justify-content: space-around;
   padding: 15px 0;
+}
+
+
+.dialog-container >>> md-tab-body {
+  max-height: none;
+}
+
+.dialog-container .find-people-controls {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dialog-container .add-user-controls ,
+.dialog-container .search-controls {
+  flex-grow: 1;
+}
+
+.dialog-container .search-controls {
+  border-right: 1px solid lightgrey;
+}
+
+.dialog-container .currently-added {
+  width: 100%;
 }

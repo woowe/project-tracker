@@ -8,6 +8,8 @@ import { MdDialog, MdDialogRef } from '@angular/material';
 
 import { Observable, BehaviorSubject } from 'rxjs';
 
+import * as fuzzysearch from 'fuzzysearch';
+
 @Component({
   selector: 'app-project-manager-dashboard',
   templateUrl: './project-manager-dashboard.component.html',
@@ -35,11 +37,10 @@ export class ProjectManagerDashboardComponent implements OnInit {
               this.dealerships.push(null);
           }
           this.dealerships[dealership.idx] = dealership;
-
         });
     });
   }
-  
+
   getIcon(alt: string): string {
     switch(alt) {
       case "DealerSocket":
@@ -78,6 +79,12 @@ export class ProjectManagerDashboardComponent implements OnInit {
 
 }
 
+export interface User {
+  name: string;
+  email: string,
+  phone: string
+}
+
 @Component({
   selector: 'dialog-overview-example-dialog',
   templateUrl: './add-dealership-dialog.component.html',
@@ -108,7 +115,13 @@ export class AddDealershipDialog {
   scroll_state: string = "scrolled-down";
   selected_tab: number = 0;
   product_more_info: any = { name: null, selected: false, selected_milestone: null, selected_type: null };
-  constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>) {
+
+  _user: User;
+  filtered_users: any[];
+  added_users: any[];
+
+
+  constructor(private productLogos: ProductLogosService, private userInfo: UserInfoService, public dialogRef: MdDialogRef<AddDealershipDialog>, private projectManager: ProjectManagerService) {
 
     this.products = this.productLogos.getProductLogos().map(v => { return { name: v.alt, selected: false, selected_milestone: null, selected_type: null }; });
     this.userInfo.getAllProductTemplates().subscribe(templates => {
@@ -133,6 +146,20 @@ export class AddDealershipDialog {
       console.log('Milestone templates: ', this.milestone_templates);
     });
   }
+
+  searchUsers(event) {
+    this.projectManager.getAllUsers().subscribe(users => { this.filtered_users = this.filterUsers(event.query, users); });
+  }
+
+  filterUsers(query, users) {
+    var filtered = [];
+    for(let user of users) {
+      if(fuzzysearch(query, user.name))
+        filtered.push(user);
+    }
+    return filtered;
+  }
+
   toggleProductSelect(idx: number) {
     if(this.products[idx]) {
       this.products[idx].selected = !this.products[idx].selected;

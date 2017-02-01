@@ -1,3 +1,35 @@
+
+md-sidenav-container {
+  background: transparent;
+}
+
+md-sidenav {
+  background: transparent !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  padding-top: 12px;
+  border-right: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+md-sidenav [md-button] {
+  color: #fff;
+  text-align: left;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  width: 100%;
+  margin: 6px 0;
+}
+
+md-sidenav [md-button] >>> .md-button-wrapper {
+  display: flex;
+  align-items: center;
+  font-size: calc(1rem + 0.2vw);
+}
+
+md-sidenav [md-button] i {
+  margin-right: 10px;
+}
+
 .pm-header {
   background-color: #2196F3;
   color: #fff;
@@ -16,13 +48,13 @@
   padding: 0;
 }
 
-.pm-dashboard .logos .moto {
+.logos .moto {
   display: flex;
   justify-content: center;
   padding: 25px 0;
 }
 
-.pm-dashboard .logos .products {
+.logos .products {
   padding: 25px 0;
   display: flex;
   justify-content: space-around;

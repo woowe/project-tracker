@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule, MdDialogModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
 
-import { CarouselModule } from 'primeng/primeng';
+import { CarouselModule, AutoCompleteModule } from 'primeng/primeng';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -67,7 +67,7 @@ const appRoutes: Routes = [
     AddDealershipDialog,
     MilestoneEditorComponent,
     FindPeopleComponent,
-    AutoCompleteComponent,
+    // AutoCompleteComponent,
     UserSliderComponent
   ],
   imports: [
@@ -78,7 +78,8 @@ const appRoutes: Routes = [
     MaterialModule.forRoot(),
     MdDialogModule,
     AngularFireModule.initializeApp(myFirebaseConfig, myFirebaseAuthConfig),
-    CarouselModule
+    CarouselModule,
+    AutoCompleteModule
   ],
   entryComponents: [
     AddDealershipDialog

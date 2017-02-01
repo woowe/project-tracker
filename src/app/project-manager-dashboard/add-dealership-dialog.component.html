@@ -2,43 +2,69 @@
   <md-tab-group [selectedIndex]="selected_tab">
     <md-tab label="">
       <form>
-        <h3><span data-idx="1"></span> Dealership Information</h3>
-        <md-grid-list cols="6" rowHeight="75px" gutterSize="10px">
-          <md-grid-tile colspan="6" rowspan="1">
-            <md-input dividerColor="accent" #name placeholder="Name"></md-input>
-          </md-grid-tile>
-          <md-grid-tile colspan="6" rowspan="1">
-            <md-input dividerColor="accent" #address placeholder="Address"></md-input>
-          </md-grid-tile>
-          <md-grid-tile colspan="2" rowspan="1">
-            <md-input dividerColor="accent" #city placeholder="City"></md-input>
-          </md-grid-tile>
-          <md-grid-tile colspan="2" rowspan="1">
-            <md-input dividerColor="accent" #state placeholder="State"></md-input>
-          </md-grid-tile>
-          <md-grid-tile colspan="2" rowspan="1">
-            <md-input dividerColor="accent" #zip placeholder="Zip"></md-input>
-          </md-grid-tile>
-        </md-grid-list>
-        <h3><span data-idx="2"></span> Add Products</h3>
-        <div class="product-inline-info-container">
-          <div *ngFor="let sp of products; let i = index" class="product-inline-info">
-            <h4 (click)="toggleProductSelect(i)" [class.selected]="sp.selected">{{ sp.name }}</h4>
-            <md-select (click)="selectProduct(i)" placeholder="Type">
-              <md-option *ngFor="let type of sp.p_template?.types; let j = index" [value]="j">
-                {{ type.name }}
-              </md-option>
-            </md-select>
-            <md-select (click)="selectProduct(i)" placeholder="Milestones">
-              <md-option *ngFor="let milestone of milestone_templates; let k = index" [value]="k">
-                {{ milestone.name }}
-              </md-option>
-            </md-select>
-            <button (click)="selectProduct(i) + gotoTab(1, i)" md-button color="primary">More&nbsp;<i class="material-icons">chevron_right</i></button>
+        <div class="main-tab-header"><span>Add a Dealership</span></div>
+        <div class="main-tab-editor">
+          <h3><span data-idx="1"></span> Dealership Information</h3>
+          <md-grid-list cols="6" rowHeight="75px" gutterSize="10px">
+            <md-grid-tile colspan="6" rowspan="1">
+              <md-input dividerColor="accent" #name placeholder="Name"></md-input>
+            </md-grid-tile>
+            <md-grid-tile colspan="6" rowspan="1">
+              <md-input dividerColor="accent" #address placeholder="Address"></md-input>
+            </md-grid-tile>
+            <md-grid-tile colspan="2" rowspan="1">
+              <md-input dividerColor="accent" #city placeholder="City"></md-input>
+            </md-grid-tile>
+            <md-grid-tile colspan="2" rowspan="1">
+              <md-input dividerColor="accent" #state placeholder="State"></md-input>
+            </md-grid-tile>
+            <md-grid-tile colspan="2" rowspan="1">
+              <md-input dividerColor="accent" #zip placeholder="Zip"></md-input>
+            </md-grid-tile>
+          </md-grid-list>
+          <h3><span data-idx="2"></span> Add Products</h3>
+          <div class="product-inline-info-container">
+            <div *ngFor="let sp of products; let i = index" class="product-inline-info">
+              <h4 (click)="toggleProductSelect(i)" [class.selected]="sp.selected">{{ sp.name }}</h4>
+              <md-select (click)="selectProduct(i)" placeholder="Type">
+                <md-option *ngFor="let type of sp.p_template?.types; let j = index" [value]="j">
+                  {{ type.name }}
+                </md-option>
+              </md-select>
+              <md-select (click)="selectProduct(i)" placeholder="Milestones">
+                <md-option *ngFor="let milestone of milestone_templates; let k = index" [value]="k">
+                  {{ milestone.name }}
+                </md-option>
+              </md-select>
+              <button (click)="selectProduct(i) + gotoTab(1, i)" md-button color="primary">More&nbsp;<i class="material-icons">chevron_right</i></button>
+            </div>
+          </div>
+          <h3><span data-idx="3"></span> Add Users</h3>
+          <div class="find-people-container">
+            <div class="find-people-controls">
+              <div class="search-controls">
+                <div>Search Exsisting Users</div>
+                <p-autoComplete [suggestions]="filtered_users" (completeMethod)="searchUsers($event)" field="name">
+                  <!-- <template let-user pTemplate="item">
+                    <span [innerHTML]="user.name"></span>
+                  </template> -->
+                </p-autoComplete>
+              </div>
+              <div class="add-user-controls">
+                <div>Add New Users</div>
+              </div>
+            </div>
+            <div class="currently-added">
+              <div>Currently Added</div>
+            </div>
           </div>
         </div>
-        <button type="submit" md-raised-button color="primary">ADD DEALERSHIP</button>
+        <div class="main-tab-footer">
+          <button md-button color="primary">CANCEL</button>
+          <button type="submit" md-button color="primary">ADD DEALERSHIP</button>
+        </div>
       </form>
+
     </md-tab>
     <md-tab label="">
       <md-toolbar style="background-color: #fff">

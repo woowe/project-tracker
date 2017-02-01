@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFire, AuthProviders, AuthMethods, AngularFireAuth, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, AuthProviders, AuthMethods, AngularFireAuth, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { Router } from '@angular/router';
 
 import { Observable, Subject, BehaviorSubject } from "rxjs/Rx";
+
 
 
 @Injectable()
@@ -63,6 +64,9 @@ export class ProjectManagerService {
   }
   getAllMilestoneTemplates() {
     return this.af.database.object('/Milestone Templates/');
+  }
+  getAllUsers() {
+    return this.af.database.list('/Users/');
   }
 
   ngOnDestroy() {

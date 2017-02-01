@@ -97,6 +97,15 @@ md-tab-body {
   height: auto !important;
 }
 
+md-dialog-container {
+  padding: 0 !important;
+}
+
+.cdk-overlay-pane {
+  border-radius: 2px;
+  overflow: hidden;
+}
+
 /*.cdk-overlay-container {
   position: fixed;
   top: 0;

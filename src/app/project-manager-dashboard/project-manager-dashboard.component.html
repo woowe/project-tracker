@@ -5,30 +5,40 @@
     </div>
   </div>
 </div>
-<div class="pm-dashboard">
-  <div class="container">
-    <div class="accounts">
-      <div class="controls">
-        <span>Accounts:</span>
-        <button md-raised-button (click)="openDialog()" color="primary">Add Dealership</button>
-      </div>
-      <div class="grid">
-        <md-card *ngFor="let dealership of dealerships" class="dealership-item has-overlay">
-          <h3>{{ dealership.dealership.name }}</h3>
-          <div class="products">
-            <i *ngFor="let product of dealership.products" mdTooltip="{{ product.product.name }}" mdTooltipPosition="below" class="material-icons" style="color: #2196F3">{{ getIcon(product.product.name) }}</i>
-          </div>
-          <user-slider [(users)]="dealership.users"></user-slider>
-        </md-card>
+<md-sidenav-container>
+  <md-sidenav mode="side" opened="true">
+    <md-list>
+     <md-list-item> <button md-button><i class="material-icons">view_comfy</i>Dashboard</button> </md-list-item>
+     <md-list-item> <button md-button><i class="material-icons">people</i>Users</button> </md-list-item>
+     <md-list-item> <button md-button><i class="material-icons">view_list</i>Milestone Templates</button> </md-list-item>
+     <md-list-item> <button md-button><i class="material-icons">account_circle</i>Account</button> </md-list-item>
+    </md-list>
+  </md-sidenav>
+  <div class="pm-dashboard">
+    <div class="container">
+      <div class="accounts">
+        <div class="controls">
+          <span>Accounts:</span>
+          <button md-raised-button (click)="openDialog()" color="primary">Add Dealership</button>
+        </div>
+        <div class="grid">
+          <md-card *ngFor="let dealership of dealerships" class="dealership-item has-overlay">
+            <h3>{{ dealership.dealership.name }}</h3>
+            <div class="products">
+              <i *ngFor="let product of dealership.products" mdTooltip="{{ product.product.name }}" mdTooltipPosition="below" class="material-icons" style="color: #2196F3">{{ getIcon(product.product.name) }}</i>
+            </div>
+            <user-slider [(users)]="dealership.users"></user-slider>
+          </md-card>
+        </div>
       </div>
     </div>
-    <div class="logos">
-      <div class="moto">
-        <img [src]="productLogos.getLogo('We Are Automotive').path" [alt]="productLogos.getLogo('We Are Automotive').alt">
-      </div>
-      <div class="products">
-        <img *ngFor="let pl of productLogos.getProductLogos();" [src]="pl.path" [alt]="pl.alt">
-      </div>
-    </div>
+  </div>
+</md-sidenav-container>
+<div class="logos">
+  <div class="moto">
+    <img [src]="productLogos.getLogo('We Are Automotive').path" [alt]="productLogos.getLogo('We Are Automotive').alt">
+  </div>
+  <div class="products">
+    <img *ngFor="let pl of productLogos.getProductLogos();" [src]="pl.path" [alt]="pl.alt">
   </div>
 </div>
